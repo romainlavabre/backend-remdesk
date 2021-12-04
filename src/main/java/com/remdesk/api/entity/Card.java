@@ -1,6 +1,9 @@
 package com.remdesk.api.entity;
 
+import com.remdesk.api.api.json.annotation.Group;
+import com.remdesk.api.api.json.annotation.Json;
 import com.remdesk.api.api.poc.annotation.*;
+import com.remdesk.api.configuration.json.GroupType;
 import com.remdesk.api.configuration.response.Message;
 import com.remdesk.api.exception.HttpUnprocessableEntityException;
 import com.remdesk.api.repository.CardRepository;
@@ -25,6 +28,9 @@ public class Card {
             post = @Post( fields = {"name"}, authenticated = false ),
             delete = @Delete( authenticated = false )
     )
+    @Json( groups = {
+            @Group( name = GroupType.GUEST )
+    } )
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY )
     private long id;
@@ -32,8 +38,14 @@ public class Card {
     @EntryPoint(
             patch = @Patch( authenticated = false )
     )
+    @Json( groups = {
+            @Group( name = GroupType.GUEST )
+    } )
     private String name;
 
+    @Json( groups = {
+            @Group( name = GroupType.GUEST )
+    } )
     private final ZonedDateTime createdAt;
 
 

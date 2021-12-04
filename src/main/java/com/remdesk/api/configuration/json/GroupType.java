@@ -5,4 +5,5 @@ package com.remdesk.api.configuration.json;
  */
 public interface GroupType {
     String DEFAULT = "_default";
+    String GUEST   = "GUEST";
 }
