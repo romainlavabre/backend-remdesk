@@ -1,10 +1,12 @@
 package com.remdesk.api.repository;
 
+import com.remdesk.api.entity.Card;
 import com.remdesk.api.entity.Credential;
 import com.remdesk.api.repository.jpa.CredentialJpa;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 
 /**
  * @author Romain Lavabre <romainlavabre98@gmail.com>
@@ -20,6 +22,12 @@ public class CredentialRepositoryImpl extends AbstractRepository< Credential > i
             CredentialJpa credentialJpa ) {
         super( entityManager, credentialJpa );
         this.credentialJpa = credentialJpa;
+    }
+
+
+    @Override
+    public List< Credential > findAllByCard( Card card ) {
+        return credentialJpa.findAllByCard( card );
     }
 
 

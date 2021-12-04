@@ -374,7 +374,7 @@ public class RouteHandler {
                     return (( GetAllBy ) httpType).method();
                 }
 
-                return "findBy" + com.remdesk.api.api.poc.kernel.util.Formatter.toPascalCase( (( GetAllBy ) httpType).entity().getSimpleName() );
+                return "findAllBy" + com.remdesk.api.api.poc.kernel.util.Formatter.toPascalCase( (( GetAllBy ) httpType).entity().getSimpleName() );
             }
 
             return null;

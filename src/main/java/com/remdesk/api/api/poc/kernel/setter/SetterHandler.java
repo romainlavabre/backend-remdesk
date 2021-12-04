@@ -1,15 +1,15 @@
 package com.remdesk.api.api.poc.kernel.setter;
 
-import com.remdesk.api.api.poc.api.CustomConstraint;
-import com.remdesk.api.api.poc.kernel.entity.EntityHandler;
-import com.remdesk.api.api.poc.kernel.util.Formatter;
-import com.remdesk.api.api.poc.kernel.util.TypeResolver;
 import com.remdesk.api.api.poc.annotation.Constraint;
 import com.remdesk.api.api.poc.annotation.RequestParameter;
+import com.remdesk.api.api.poc.api.CustomConstraint;
+import com.remdesk.api.api.poc.kernel.entity.EntityHandler;
 import com.remdesk.api.api.poc.kernel.exception.InvalidSetterParameterType;
 import com.remdesk.api.api.poc.kernel.exception.MultipleSetterFoundException;
 import com.remdesk.api.api.poc.kernel.exception.SetterNotFoundException;
 import com.remdesk.api.api.poc.kernel.exception.ToManySetterParameterException;
+import com.remdesk.api.api.poc.kernel.util.Formatter;
+import com.remdesk.api.api.poc.kernel.util.TypeResolver;
 import com.remdesk.api.api.request.Request;
 import com.remdesk.api.repository.DefaultRepository;
 import org.slf4j.Logger;
@@ -127,7 +127,7 @@ public class SetterHandler {
             } else if ( isRelation && !isArrayOrCollection ) {
                 Object relation;
 
-                if ( TypeResolver.isWrapperOrPrimitive( newValue ) ) {
+                if ( newValue == null || TypeResolver.isWrapperOrPrimitive( newValue ) ) {
 
                     Long              value             = ( Long ) TypeResolver.castTo( Long.class, newValue );
                     DefaultRepository defaultRepository = entityHandler.getEntity( relationType.getSubject() ).getDefaultRepository();

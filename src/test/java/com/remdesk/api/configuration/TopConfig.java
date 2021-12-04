@@ -1,6 +1,7 @@
 package com.remdesk.api.configuration;
 
 import com.remdesk.api.entity.Card;
+import com.remdesk.api.entity.Credential;
 
 import java.util.Set;
 
@@ -11,7 +12,8 @@ public class TopConfig {
 
     public static Set< Class< ? > > getSubscribers() {
         return Set.of(
-                Card.class
+                Card.class,
+                Credential.class
         );
     }
 }

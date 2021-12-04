@@ -11,6 +11,8 @@ import com.remdesk.api.repository.CardRepository;
 import javax.persistence.*;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Romain Lavabre <romainlavabre98@gmail.com>
@@ -47,9 +49,16 @@ public class Card {
     @Column( name = "created_at", nullable = false )
     private final ZonedDateTime createdAt;
 
+    @Json( groups = {
+            @Group( name = GroupType.GUEST, object = true, key = "credentials_id" )
+    } )
+    @OneToMany( cascade = {CascadeType.PERSIST} )
+    private final List< Credential > credentials;
+
 
     public Card() {
-        createdAt = ZonedDateTime.now( ZoneId.of( "UTC" ) );
+        credentials = new ArrayList<>();
+        createdAt   = ZonedDateTime.now( ZoneId.of( "UTC" ) );
     }
 
 
@@ -80,5 +89,23 @@ public class Card {
 
     public ZonedDateTime getCreatedAt() {
         return createdAt;
+    }
+
+
+    public List< Credential > getCredentials() {
+        return credentials;
+    }
+
+
+    public Card addCredential( Credential credential ) {
+        if ( !credentials.contains( credential ) ) {
+            credentials.add( credential );
+
+            if ( credential.getCard() != this ) {
+                credential.setCard( this );
+            }
+        }
+
+        return this;
     }
 }
