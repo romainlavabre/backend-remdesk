@@ -14,9 +14,10 @@ public class CardRepositoryImpl extends AbstractRepository< Card > implements Ca
 
     protected final CardJpa cardJpa;
 
+
     public CardRepositoryImpl(
             EntityManager entityManager,
-            CardJpa cardJpa) {
+            CardJpa cardJpa ) {
         super( entityManager, cardJpa );
         this.cardJpa = cardJpa;
     }
@@ -24,6 +25,6 @@ public class CardRepositoryImpl extends AbstractRepository< Card > implements Ca
 
     @Override
     protected Class< Card > getClassType() {
-        return null;
+        return Card.class;
     }
 }

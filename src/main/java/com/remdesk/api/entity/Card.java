@@ -8,10 +8,7 @@ import com.remdesk.api.configuration.response.Message;
 import com.remdesk.api.exception.HttpUnprocessableEntityException;
 import com.remdesk.api.repository.CardRepository;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
@@ -41,11 +38,13 @@ public class Card {
     @Json( groups = {
             @Group( name = GroupType.GUEST )
     } )
+    @Column( nullable = false )
     private String name;
 
     @Json( groups = {
             @Group( name = GroupType.GUEST )
     } )
+    @Column( name = "created_at", nullable = false )
     private final ZonedDateTime createdAt;
 
 
