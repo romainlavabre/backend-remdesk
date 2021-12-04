@@ -7,7 +7,7 @@ import com.replace.replace.api.poc.annotation.*;
 import com.replace.replace.api.poc.kernel.entity.EntityHandler;
 import com.replace.replace.api.poc.kernel.exception.*;
 import com.replace.replace.api.poc.kernel.setter.SetterHandler;
-import com.replace.replace.configuration.dynamic.TriggerIdentifier;
+import com.replace.replace.configuration.poc.TriggerIdentifier;
 import com.replace.replace.repository.DefaultRepository;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
