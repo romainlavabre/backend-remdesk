@@ -9,8 +9,8 @@ This library permit to keep trace of altered object.
 Usage:
 
 ```java
-import com.replace.replace.api.history.HistoryHandler;
-import com.replace.replace.api.request.Request;
+import HistoryHandler;
+import Request;
 
 public class CreateSample{
 
@@ -33,8 +33,8 @@ This sample adds trace of Sample creation.
 
 
 ```java
-import com.replace.replace.api.history.HistoryHandler;
-import com.replace.replace.api.request.Request;
+import HistoryHandler;
+import Request;
 
 public class UpdateName{
 
@@ -58,8 +58,8 @@ This sample adds trace of Sample update.
 
 
 ```java
-import com.replace.replace.api.history.HistoryHandler;
-import com.replace.replace.api.request.Request;
+import HistoryHandler;
+import Request;
 
 public class DeleteSample{
 

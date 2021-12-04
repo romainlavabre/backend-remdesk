@@ -1,0 +1,12 @@
+package com.remdesk.api;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class RemdeskApiApplicationTests {
+
+    @Test
+    void contextLoads() {
+    }
+}

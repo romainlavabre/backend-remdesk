@@ -12,11 +12,11 @@ he is loaded by request.
 By default, you have this configuration:
 
 ```java
-import com.replace.replace.api.upload.annotation.Move;
-import com.replace.replace.api.upload.annotation.Duplication;
-import com.replace.replace.api.upload.annotation.AcceptType;
-import com.replace.replace.api.upload.annotation.Size;
-import com.replace.replace.api.upload.annotation.TransactionSynchronized;
+import Move;
+import Duplication;
+import AcceptType;
+import Size;
+import TransactionSynchronized;
 
 
 public interface UploadHandler extends EventSubscriber {
@@ -68,7 +68,7 @@ public interface UploadHandler extends EventSubscriber {
 You can accept all types:
 
 ```java
-import com.replace.replace.api.upload.annotation.AcceptType;
+import AcceptType;
 @AcceptType(all = true);
 ```
 
@@ -77,7 +77,7 @@ import com.replace.replace.api.upload.annotation.AcceptType;
 The move rule must implement:
 
 ```java
-package com.replace.replace.api.upload.Move.MoveRule;
+package MoveRule;
 ```
 
 ### Duplication rule

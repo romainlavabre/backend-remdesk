@@ -7,7 +7,7 @@
 The environment permit accessing to properties.
 
 ```java
-com.replace.replace.api.environment.Environment;
+Environment;
 ```
 
 You can create your variable here:

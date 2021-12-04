@@ -13,8 +13,8 @@ you can apply easier the filters, or ignored property etc.
 By default, your configuration is
 
 ```java
-import com.replace.replace.api.json.annotation.Group;
-import com.replace.replace.api.json.annotation.Json;
+import Group;
+import Json;
 
 public class Sample{
 
@@ -38,8 +38,8 @@ For this case, it will produce this output:
 
 
 ```java
-import com.replace.replace.api.json.annotation.Group;
-import com.replace.replace.api.json.annotation.Json;
+import Group;
+import Json;
 
 public class Sample{
 
@@ -62,8 +62,8 @@ output:
 For know how build a custom formatter, see the section "Build Formatter"
  
 ```java
-import com.replace.replace.api.json.annotation.Group;
-import com.replace.replace.api.json.annotation.Json;
+import Group;
+import Json;
 
 public class Sample{
 
@@ -87,8 +87,8 @@ output:
 For know how build a custom overwrite, see the section "Build Overwrite"
  
 ```java
-import com.replace.replace.api.json.annotation.Group;
-import com.replace.replace.api.json.annotation.Json;
+import Group;
+import Json;
 
 public class Sample{
 
@@ -112,8 +112,8 @@ output:
 The encoder need know when take, or travel the object 
  
 ```java
-import com.replace.replace.api.json.annotation.Group;
-import com.replace.replace.api.json.annotation.Json;
+import Group;
+import Json;
 
 public class Sample{
 
@@ -135,8 +135,8 @@ output:
 
  
 ```java
-import com.replace.replace.api.json.annotation.Group;
-import com.replace.replace.api.json.annotation.Json;
+import Group;
+import Json;
 
 public class Sample{
 
@@ -160,8 +160,8 @@ output:
 
 
 ```java
-import com.replace.replace.api.json.annotation.Group;
-import com.replace.replace.api.json.annotation.Json;
+import Group;
+import Json;
 
 public class Sample{
 
@@ -189,9 +189,9 @@ output:
 #### Multiple configurations
 
 ```java
-import com.replace.replace.configuration.json.GroupType;
-import com.replace.replace.api.json.annotation.Group;
-import com.replace.replace.api.json.annotation.Json;
+import GroupType;
+import Group;
+import Json;
 
 public class Sample{
 
@@ -212,11 +212,11 @@ public class Sample{
 #### Add row
 
 ```java
-import com.replace.replace.configuration.json.GroupType;
-import com.replace.replace.api.json.annotation.Group;
-import com.replace.replace.api.json.annotation.JsonPut;
-import com.replace.replace.api.json.annotation.Row;
-import com.replace.replace.api.json.put.Put;
+import GroupType;
+import Group;
+import JsonPut;
+import Row;
+import Put;
 
 
 @JsonPut( group = {
@@ -234,7 +234,7 @@ public class Sample{
 ### Encode your data
 
 ```java
-import com.replace.replace.api.json.Encoder;import com.replace.replace.configuration.json.GroupType;import java.util.Map;
+import Encoder;import GroupType;import java.util.Map;
 
 public class SampleController {
 
