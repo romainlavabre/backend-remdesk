@@ -31,7 +31,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/auth",
             "/api/documentation/**",
             "/v2/api-docs",
-            "/v3/api-docs"
+            "/v3/api-docs",
+            "/guest/**"
     };
     protected            JwtTokenHandler    jwtTokenHandler;
     protected            UserDetailsService userDetailsService;
@@ -60,7 +61,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers( SecurityConfig.WHITE_ENDPOINT ).permitAll()
-                .antMatchers( "/**" ).access( "hasRole('ROLE_ADMIN')" )
                 .anyRequest().authenticated();
 
         http
