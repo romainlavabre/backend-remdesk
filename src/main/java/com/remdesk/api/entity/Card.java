@@ -52,7 +52,7 @@ public class Card {
     @Json( groups = {
             @Group( name = GroupType.GUEST, object = true, key = "credentials_id" )
     } )
-    @OneToMany( cascade = {CascadeType.PERSIST} )
+    @OneToMany( cascade = {CascadeType.PERSIST}, mappedBy = "card" )
     private final List< Credential > credentials;
 
 
