@@ -127,7 +127,7 @@ public class SetterHandler {
             } else if ( isRelation && !isArrayOrCollection ) {
                 Object relation;
 
-                if ( newValue == null || TypeResolver.isWrapperOrPrimitive( newValue ) ) {
+                if ( newValue != null && TypeResolver.isWrapperOrPrimitive( newValue ) ) {
 
                     Long              value             = ( Long ) TypeResolver.castTo( Long.class, newValue );
                     DefaultRepository defaultRepository = entityHandler.getEntity( relationType.getSubject() ).getDefaultRepository();
@@ -135,7 +135,6 @@ public class SetterHandler {
                 } else {
                     relation = newValue;
                 }
-
 
                 callConstraint( entity, relation );
                 method.invoke( entity, relation );

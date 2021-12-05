@@ -173,6 +173,10 @@ public class Credential {
 
 
     public Credential setCard( Card card ) {
+        if ( card == null ) {
+            throw new HttpUnprocessableEntityException( Message.CREDENTIAL_CARD_REQUIRED );
+        }
+
         this.card = card;
 
         if ( !card.getCredentials().contains( this ) ) {
