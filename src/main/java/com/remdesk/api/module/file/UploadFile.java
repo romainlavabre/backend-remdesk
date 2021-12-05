@@ -1,6 +1,6 @@
 package com.remdesk.api.module.file;
 
-import com.remdesk.api.api.crud.Create;
+import com.remdesk.api.api.poc.api.UnmanagedTrigger;
 import com.remdesk.api.api.request.Request;
 import com.remdesk.api.api.storage.document.DocumentStorageHandler;
 import com.remdesk.api.api.upload.UploadedFile;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  * @author Romain Lavabre <romainlavabre98@gmail.com>
  */
 @Service
-public class UploadFile implements Create< File > {
+public class UploadFile implements UnmanagedTrigger {
 
     protected final DocumentStorageHandler documentStorageHandler;
 
@@ -25,12 +25,16 @@ public class UploadFile implements Create< File > {
 
 
     @Override
-    public void create( Request request, File file ) {
+    public void handle( Request request, Object resource ) {
+        File file = ( File ) resource;
+
         UploadedFile uploadedFile = request.getFile( "file_file" );
 
         if ( uploadedFile == null ) {
             throw new HttpUnprocessableEntityException( Message.FILE_FILE_REQUIRED );
         }
+
+        file.setPath( PathResolver.getPath( file ) );
 
         boolean result = documentStorageHandler.create( file.getPath(), uploadedFile.getContent() );
 
@@ -39,7 +43,6 @@ public class UploadFile implements Create< File > {
         }
 
         file.setContentType( uploadedFile.getContentType() )
-            .setSize( ( long ) uploadedFile.getContent().length )
-            .setPath( PathResolver.getPath( file ) );
+            .setSize( ( long ) uploadedFile.getSize() );
     }
 }

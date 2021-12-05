@@ -27,4 +27,7 @@ public @interface UnmanagedTrigger {
 
 
     Class< ? extends Delete< ? > > deleteExecutor() default DefaultDelete.class;
+
+
+    Class< ? extends com.remdesk.api.api.poc.api.UnmanagedTrigger > unmanagedExecutor() default DefaultUnmanagedExecutor.class;
 }

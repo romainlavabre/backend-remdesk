@@ -1,6 +1,6 @@
 package com.remdesk.api.module.file;
 
-import com.remdesk.api.api.crud.Update;
+import com.remdesk.api.api.poc.api.UnmanagedTrigger;
 import com.remdesk.api.api.request.Request;
 import com.remdesk.api.api.storage.document.DocumentStorageHandler;
 import com.remdesk.api.configuration.response.Message;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * @author Romain Lavabre <romainlavabre98@gmail.com>
  */
 @Service
-public class MoveFile implements Update< File > {
+public class MoveFile implements UnmanagedTrigger {
 
     protected final DocumentStorageHandler documentStorageHandler;
 
@@ -23,13 +23,17 @@ public class MoveFile implements Update< File > {
 
 
     @Override
-    public void update( Request request, File file ) {
-        boolean result = documentStorageHandler.move( file.getPath(), PathResolver.getPath( file ) );
+    public void handle( Request request, Object resource ) {
+        File file = ( File ) resource;
+
+        String newPath = PathResolver.getPath( file );
+
+        boolean result = documentStorageHandler.move( file.getPath(), newPath );
 
         if ( !result ) {
             throw new HttpInternalServerErrorException( Message.FILE_UNABLE_TO_MOVE );
         }
 
-        file.setPath( PathResolver.getPath( file ) );
+        file.setPath( newPath );
     }
 }

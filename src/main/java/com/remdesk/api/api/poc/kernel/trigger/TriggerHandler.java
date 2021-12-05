@@ -175,6 +175,8 @@ public class TriggerHandler {
                 executor = applicationContext.getBean( unmanagedTrigger.updateExecutor() );
             } else if ( unmanagedTrigger.deleteExecutor() != DefaultDelete.class ) {
                 executor = applicationContext.getBean( unmanagedTrigger.deleteExecutor() );
+            } else {
+                executor = applicationContext.getBean( unmanagedTrigger.unmanagedExecutor() );
             }
 
             if ( executor == null ) {
@@ -243,6 +245,12 @@ public class TriggerHandler {
         public boolean isDeleteExecutor() {
             return executor != null
                     && executor instanceof Delete;
+        }
+
+
+        public boolean isUnmanagedExecutor() {
+            return executor != null
+                    && executor instanceof com.remdesk.api.api.poc.api.UnmanagedTrigger;
         }
 
 

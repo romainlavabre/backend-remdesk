@@ -41,9 +41,9 @@ public class File {
             ),
             delete = @Delete( authenticated = false, triggers = {@Trigger( triggerId = TriggerIdentifier.FILE_DELETE_FILE, provideMe = true )} ),
             unmanagedTriggers = {
-                    @UnmanagedTrigger( id = TriggerIdentifier.FILE_UPLOAD_FILE, createExecutor = UploadFile.class ),
-                    @UnmanagedTrigger( id = TriggerIdentifier.FILE_MOVE_FILE, updateExecutor = MoveFile.class ),
-                    @UnmanagedTrigger( id = TriggerIdentifier.FILE_DELETE_FILE, deleteExecutor = DeleteFile.class )
+                    @UnmanagedTrigger( id = TriggerIdentifier.FILE_UPLOAD_FILE, unmanagedExecutor = UploadFile.class ),
+                    @UnmanagedTrigger( id = TriggerIdentifier.FILE_MOVE_FILE, unmanagedExecutor = MoveFile.class ),
+                    @UnmanagedTrigger( id = TriggerIdentifier.FILE_DELETE_FILE, unmanagedExecutor = DeleteFile.class )
             }
     )
     @Json( groups = {

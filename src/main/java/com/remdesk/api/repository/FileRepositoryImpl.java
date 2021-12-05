@@ -1,10 +1,12 @@
 package com.remdesk.api.repository;
 
 import com.remdesk.api.entity.File;
+import com.remdesk.api.entity.Folder;
 import com.remdesk.api.repository.jpa.FileJpa;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 
 /**
  * @author Romain Lavabre <romainlavabre98@gmail.com>
@@ -20,6 +22,12 @@ public class FileRepositoryImpl extends AbstractRepository< File > implements Fi
             FileJpa fileJpa ) {
         super( entityManager, fileJpa );
         this.fileJpa = fileJpa;
+    }
+
+
+    @Override
+    public List< File > findAllByFolder( Folder folder ) {
+        return fileJpa.findAllByFolder( folder );
     }
 
 
