@@ -1,7 +1,9 @@
 package com.remdesk.api.api.storage.document;
 
 import com.remdesk.api.api.environment.Environment;
-import com.remdesk.api.configuration.environment.Variable;
+import com.remdesk.api.exception.HttpInternalServerErrorException;
+import com.remdesk.api.module.configuration.ConfigurationHandler;
+import com.remdesk.api.module.configuration.FileStorageConfiguration;
 import org.springframework.stereotype.Service;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
@@ -28,20 +30,28 @@ import java.time.Duration;
 @Service
 public class S3 implements DocumentStorageHandler {
 
-    protected S3Client    s3Client = null;
-    protected Environment environment;
+    protected       S3Client             s3Client = null;
+    protected       Environment          environment;
+    protected final ConfigurationHandler configurationHandler;
 
 
-    public S3( final Environment environment ) {
-        this.environment = environment;
+    public S3( final Environment environment, ConfigurationHandler configurationHandler ) {
+        this.environment          = environment;
+        this.configurationHandler = configurationHandler;
     }
 
 
     @Override
     public boolean create( final String path, final File file ) {
+        FileStorageConfiguration fileStorageConfiguration = configurationHandler.getFileStorageConfig();
+
+        if ( fileStorageConfiguration.hasConfiguration() ) {
+            throw new HttpInternalServerErrorException( "Access not configured" );
+        }
+
         final PutObjectRequest putObjectRequest =
                 PutObjectRequest.builder()
-                                .bucket( this.environment.getEnv( Variable.DOCUMENT_AWS_BUCKET ) )
+                                .bucket( fileStorageConfiguration.getCompartment() )
                                 .key( path )
                                 .build();
 
@@ -62,9 +72,15 @@ public class S3 implements DocumentStorageHandler {
 
     @Override
     public boolean create( final String path, final ByteBuffer byteBuffer ) {
+        FileStorageConfiguration fileStorageConfiguration = configurationHandler.getFileStorageConfig();
+
+        if ( fileStorageConfiguration.hasConfiguration() ) {
+            throw new HttpInternalServerErrorException( "Access not configured" );
+        }
+
         final PutObjectRequest putObjectRequest =
                 PutObjectRequest.builder()
-                                .bucket( this.environment.getEnv( Variable.DOCUMENT_AWS_BUCKET ) )
+                                .bucket( fileStorageConfiguration.getCompartment() )
                                 .key( path )
                                 .build();
 
@@ -76,9 +92,15 @@ public class S3 implements DocumentStorageHandler {
 
     @Override
     public boolean create( final String path, final byte[] bytes ) {
+        FileStorageConfiguration fileStorageConfiguration = configurationHandler.getFileStorageConfig();
+
+        if ( fileStorageConfiguration.hasConfiguration() ) {
+            throw new HttpInternalServerErrorException( "Access not configured" );
+        }
+
         final PutObjectRequest putObjectRequest =
                 PutObjectRequest.builder()
-                                .bucket( this.environment.getEnv( Variable.DOCUMENT_AWS_BUCKET ) )
+                                .bucket( fileStorageConfiguration.getCompartment() )
                                 .key( path )
                                 .build();
 
@@ -91,9 +113,15 @@ public class S3 implements DocumentStorageHandler {
     @Override
     public boolean remove( final String path ) {
 
+        FileStorageConfiguration fileStorageConfiguration = configurationHandler.getFileStorageConfig();
+
+        if ( fileStorageConfiguration.hasConfiguration() ) {
+            throw new HttpInternalServerErrorException( "Access not configured" );
+        }
+
         final DeleteObjectRequest deleteObjectRequest =
                 DeleteObjectRequest.builder()
-                                   .bucket( this.environment.getEnv( Variable.DOCUMENT_AWS_BUCKET ) )
+                                   .bucket( fileStorageConfiguration.getCompartment() )
                                    .key( path )
                                    .build();
 
@@ -135,6 +163,12 @@ public class S3 implements DocumentStorageHandler {
 
     @Override
     public String getUrl( final String path, final Integer time ) {
+        FileStorageConfiguration fileStorageConfiguration = configurationHandler.getFileStorageConfig();
+
+        if ( fileStorageConfiguration.hasConfiguration() ) {
+            throw new HttpInternalServerErrorException( "Access not configured" );
+        }
+
         final GetObjectPresignRequest getObjectPresignRequest =
                 GetObjectPresignRequest.builder()
                                        .signatureDuration( Duration.ofMinutes( time ) )
@@ -143,8 +177,8 @@ public class S3 implements DocumentStorageHandler {
 
 
         final AwsBasicCredentials awsBasicCredentials = AwsBasicCredentials.create(
-                this.environment.getEnv( Variable.DOCUMENT_PUBLIC_KEY ),
-                this.environment.getEnv( Variable.DOCUMENT_PRIVATE_KEY )
+                fileStorageConfiguration.getClientId(),
+                fileStorageConfiguration.getClientSecret()
         );
 
         final S3Presigner s3Presigner =
@@ -169,8 +203,14 @@ public class S3 implements DocumentStorageHandler {
 
 
     protected GetObjectRequest getObjectRequest( final String path ) {
+        FileStorageConfiguration fileStorageConfiguration = configurationHandler.getFileStorageConfig();
+
+        if ( fileStorageConfiguration.hasConfiguration() ) {
+            throw new HttpInternalServerErrorException( "Access not configured" );
+        }
+
         return GetObjectRequest.builder()
-                               .bucket( this.environment.getEnv( Variable.DOCUMENT_AWS_BUCKET ) )
+                               .bucket( fileStorageConfiguration.getCompartment() )
                                .key( path )
                                .build();
     }
@@ -181,9 +221,15 @@ public class S3 implements DocumentStorageHandler {
             return this.s3Client;
         }
 
+        FileStorageConfiguration fileStorageConfiguration = configurationHandler.getFileStorageConfig();
+
+        if ( fileStorageConfiguration.hasConfiguration() ) {
+            throw new HttpInternalServerErrorException( "Access not configured" );
+        }
+
         final AwsBasicCredentials awsBasicCredentials = AwsBasicCredentials.create(
-                this.environment.getEnv( Variable.DOCUMENT_PUBLIC_KEY ),
-                this.environment.getEnv( Variable.DOCUMENT_PRIVATE_KEY )
+                fileStorageConfiguration.getClientId(),
+                fileStorageConfiguration.getClientSecret()
         );
 
         return this.s3Client =

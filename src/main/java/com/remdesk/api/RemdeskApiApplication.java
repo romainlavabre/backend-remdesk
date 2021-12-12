@@ -1,8 +1,10 @@
 package com.remdesk.api;
 
 import com.remdesk.api.api.environment.Environment;
+import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -10,8 +12,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @SpringBootApplication
 public class RemdeskApiApplication {
 
+    private static ConfigurableApplicationContext context;
+
+
     public static void main( final String[] args ) {
-        SpringApplication.run( RemdeskApiApplication.class, args );
+        context = SpringApplication.run( RemdeskApiApplication.class, args );
     }
 
 
@@ -32,5 +37,18 @@ public class RemdeskApiApplication {
                         .exposedHeaders( "Location", "Authorization" );
             }
         };
+    }
+
+
+    public static void restart() {
+        ApplicationArguments args = context.getBean( ApplicationArguments.class );
+
+        Thread thread = new Thread( () -> {
+            context.close();
+            context = SpringApplication.run( RemdeskApiApplication.class, args.getSourceArgs() );
+        } );
+
+        thread.setDaemon( false );
+        thread.start();
     }
 }
