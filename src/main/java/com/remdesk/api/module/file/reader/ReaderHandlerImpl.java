@@ -59,9 +59,14 @@ public class ReaderHandlerImpl implements ReaderHandler {
         Map< String, Object >          customCommands                 = fileSoftwareUsageConfiguration.getCustomCommands();
 
         if ( customCommands.containsKey( origin.getContentType() ) ) {
-            return customCommands.get( origin.getContentType() ).toString().replace( "{file}", temporary.getAbsolutePath() );
+            return customCommands
+                    .get( origin.getContentType() )
+                    .toString()
+                    .replace( "{file}", temporary.getAbsolutePath() );
         }
 
-        return fileSoftwareUsageConfiguration.getDefaultCommand().replace( "{file}", temporary.getAbsolutePath() );
+        return fileSoftwareUsageConfiguration
+                .getDefaultCommand()
+                .replace( "{file}", temporary.getAbsolutePath() );
     }
 }
