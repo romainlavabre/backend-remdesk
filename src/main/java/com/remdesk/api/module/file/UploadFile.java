@@ -43,7 +43,7 @@ public class UploadFile implements UnmanagedTrigger {
         file.setPath( PathResolver.getPath( file ) );
 
         assertNotDuplication( file.getPath() );
-        
+
         boolean result = documentStorageHandler.create( file.getPath(), uploadedFile.getContent() );
 
         if ( !result ) {

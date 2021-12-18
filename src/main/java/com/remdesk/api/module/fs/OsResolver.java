@@ -1,4 +1,4 @@
-package com.remdesk.api.module.configuration;
+package com.remdesk.api.module.fs;
 
 /**
  * @author Romain Lavabre <romainlavabre98@gmail.com>
