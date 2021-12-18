@@ -115,7 +115,7 @@ public class FileStorageConfiguration {
     public FileStorageConfiguration writeNewConfig() {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put( "clientId", clientId );
-        jsonObject.put( "clientSecret", clientId );
+        jsonObject.put( "clientSecret", clientSecret );
         jsonObject.put( "compartment", compartment );
         jsonObject.put( "zone", zone );
 
@@ -131,7 +131,7 @@ public class FileStorageConfiguration {
         if ( file != null ) {
             try {
                 String content = Files.readString( Path.of( file.getPath() ) );
-                
+
                 JSONObject jsonObject = new JSONObject( content );
                 clientId     = jsonObject.getString( "clientId" );
                 clientSecret = jsonObject.getString( "clientSecret" );

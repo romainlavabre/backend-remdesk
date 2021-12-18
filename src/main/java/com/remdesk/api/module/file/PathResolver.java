@@ -59,4 +59,22 @@ public class PathResolver {
 
         return stringJoiner.toString();
     }
+
+
+    public static List< Folder > getHumanPath( Folder folder ) {
+        List< Folder > parts = new ArrayList<>();
+        parts.add( folder );
+
+        folder = folder.getParent();
+
+        while ( folder != null ) {
+            parts.add( folder );
+
+            folder = folder.getParent();
+        }
+
+        Collections.reverse( parts );
+
+        return parts;
+    }
 }

@@ -6,8 +6,10 @@ import com.remdesk.api.api.storage.document.DocumentStorageHandler;
 import com.remdesk.api.api.upload.UploadedFile;
 import com.remdesk.api.configuration.response.Message;
 import com.remdesk.api.entity.File;
+import com.remdesk.api.exception.HttpConflictException;
 import com.remdesk.api.exception.HttpInternalServerErrorException;
 import com.remdesk.api.exception.HttpUnprocessableEntityException;
+import com.remdesk.api.repository.FileRepository;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,10 +19,14 @@ import org.springframework.stereotype.Service;
 public class UploadFile implements UnmanagedTrigger {
 
     protected final DocumentStorageHandler documentStorageHandler;
+    protected final FileRepository         fileRepository;
 
 
-    public UploadFile( DocumentStorageHandler documentStorageHandler ) {
+    public UploadFile(
+            DocumentStorageHandler documentStorageHandler,
+            FileRepository fileRepository ) {
         this.documentStorageHandler = documentStorageHandler;
+        this.fileRepository         = fileRepository;
     }
 
 
@@ -36,6 +42,8 @@ public class UploadFile implements UnmanagedTrigger {
 
         file.setPath( PathResolver.getPath( file ) );
 
+        assertNotDuplication( file.getPath() );
+        
         boolean result = documentStorageHandler.create( file.getPath(), uploadedFile.getContent() );
 
         if ( !result ) {
@@ -44,5 +52,12 @@ public class UploadFile implements UnmanagedTrigger {
 
         file.setContentType( uploadedFile.getContentType() )
             .setSize( ( long ) uploadedFile.getSize() );
+    }
+
+
+    protected void assertNotDuplication( String path ) {
+        if ( fileRepository.findByPath( path ).isPresent() ) {
+            throw new HttpConflictException( Message.FILE_ALREADY_EXISTS );
+        }
     }
 }

@@ -12,6 +12,7 @@ import com.remdesk.api.repository.DefaultRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -141,9 +142,9 @@ public class Controller {
 
         dataStorageHandler.save();
 
-        return ResponseEntity.ok(
-                Encoder.encode( subject, getGroup( route.getRole() ) )
-        );
+        return ResponseEntity
+                .status( HttpStatus.CREATED )
+                .body( Encoder.encode( subject, getGroup( route.getRole() ) ) );
     }
 
 
@@ -204,7 +205,7 @@ public class Controller {
         if ( role == null ) {
             return "GUEST";
         }
-        
+
         try {
             field = GroupType.class.getDeclaredField( role.replaceFirst( "ROLE_", "" ).toUpperCase() );
         } catch ( NoSuchFieldException e ) {

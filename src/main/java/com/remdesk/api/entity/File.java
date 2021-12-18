@@ -71,7 +71,7 @@ public class File {
     @Json( groups = {
             @Group( name = GroupType.GUEST )
     } )
-    @Column( nullable = false )
+    @Column( nullable = false, unique = true )
     private String path;
 
     @Json( groups = {

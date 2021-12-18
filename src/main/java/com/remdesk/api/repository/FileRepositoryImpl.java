@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Romain Lavabre <romainlavabre98@gmail.com>
@@ -28,6 +29,12 @@ public class FileRepositoryImpl extends AbstractRepository< File > implements Fi
     @Override
     public List< File > findAllByFolder( Folder folder ) {
         return fileJpa.findAllByFolder( folder );
+    }
+
+
+    @Override
+    public Optional< File > findByPath( String path ) {
+        return fileJpa.findByPath( path );
     }
 
 

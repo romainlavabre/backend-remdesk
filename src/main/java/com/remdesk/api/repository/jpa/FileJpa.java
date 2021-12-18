@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Romain Lavabre <romainlavabre98@gmail.com>
@@ -14,4 +15,7 @@ import java.util.List;
 public interface FileJpa extends JpaRepository< File, Long > {
 
     List< File > findAllByFolder( Folder folder );
+
+
+    Optional< File > findByPath( String path );
 }
