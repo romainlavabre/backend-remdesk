@@ -12,8 +12,14 @@ public interface ConfigurationHandler {
     void insertFileStorageConfig( Request request );
 
 
+    void insertFileSoftwareUsage( Request request );
+
+
     DatabaseConfiguration getDatabaseConfig();
 
 
     FileStorageConfiguration getFileStorageConfig();
+
+
+    FileSoftwareUsageConfiguration getFileSoftwareUsageConfiguration();
 }

@@ -4,6 +4,7 @@ import com.remdesk.api.api.request.Request;
 import com.remdesk.api.configuration.response.Message;
 import com.remdesk.api.exception.HttpUnprocessableEntityException;
 import com.remdesk.api.parameter.DatabaseParameter;
+import com.remdesk.api.parameter.FileSoftwareUsageParameter;
 import com.remdesk.api.parameter.StorageParameter;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +14,7 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Map;
 
 /**
  * @author Romain Lavabre <romainlavabre98@gmail.com>
@@ -62,6 +64,25 @@ public class ConfigurationHandlerImpl implements ConfigurationHandler {
 
 
     @Override
+    public void insertFileSoftwareUsage( Request request ) {
+        String                defaultCommand = ( String ) request.getParameter( FileSoftwareUsageParameter.DEFAULT_COMMAND );
+        Map< String, Object > customCommand  = ( Map< String, Object > ) request.getParameter( FileSoftwareUsageParameter.CUSTOM_COMMANDS );
+
+        FileSoftwareUsageConfiguration fileSoftwareUsageConfiguration = getFileSoftwareUsageConfiguration();
+        fileSoftwareUsageConfiguration
+                .setDefaultCommand( defaultCommand );
+
+        fileSoftwareUsageConfiguration.getCustomCommands().clear();
+
+        for ( Map.Entry< String, Object > entry : customCommand.entrySet() ) {
+            fileSoftwareUsageConfiguration.addCustomCommand( entry.getKey(), entry.getValue() != null ? entry.getValue().toString() : null );
+        }
+
+        fileSoftwareUsageConfiguration.writeNewConfig();
+    }
+
+
+    @Override
     public DatabaseConfiguration getDatabaseConfig() {
         return DatabaseConfiguration.getInstance();
     }
@@ -70,6 +91,12 @@ public class ConfigurationHandlerImpl implements ConfigurationHandler {
     @Override
     public FileStorageConfiguration getFileStorageConfig() {
         return FileStorageConfiguration.getInstance();
+    }
+
+
+    @Override
+    public FileSoftwareUsageConfiguration getFileSoftwareUsageConfiguration() {
+        return FileSoftwareUsageConfiguration.getInstance();
     }
 
 

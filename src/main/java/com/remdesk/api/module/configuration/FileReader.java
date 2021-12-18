@@ -9,8 +9,9 @@ import java.util.List;
  * @author Romain Lavabre <romainlavabre98@gmail.com>
  */
 public class FileReader {
-    private static final String DATABASE_FILE = "database.json";
-    private static final String STORAGE_FILE  = "storage.json";
+    private static final String DATABASE_FILE            = "database.json";
+    private static final String STORAGE_FILE             = "storage.json";
+    private static final String FILE_SOFTWARE_USAGE_FILE = "file_software_usage.json";
 
 
     public static File getDatabaseFile() {
@@ -20,5 +21,10 @@ public class FileReader {
 
     public static File getStorageFile() {
         return FileSystemHandler.getFile( FileSystemHandler.buildPath( List.of( STORAGE_FILE ) ) );
+    }
+
+
+    public static File getFileSoftwareUsageFile() {
+        return FileSystemHandler.getFile( FileSystemHandler.buildPath( List.of( FILE_SOFTWARE_USAGE_FILE ) ) );
     }
 }

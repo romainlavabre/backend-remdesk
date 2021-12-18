@@ -4,13 +4,11 @@ import com.remdesk.api.api.json.Encoder;
 import com.remdesk.api.api.storage.document.DocumentStorageHandler;
 import com.remdesk.api.configuration.json.GroupType;
 import com.remdesk.api.entity.File;
+import com.remdesk.api.module.file.reader.ReaderHandler;
 import com.remdesk.api.repository.FileRepository;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -24,13 +22,16 @@ public class FileController {
 
     protected final FileRepository         fileRepository;
     protected final DocumentStorageHandler documentStorageHandler;
+    protected final ReaderHandler          readerHandler;
 
 
     public FileController(
             FileRepository fileRepository,
-            DocumentStorageHandler documentStorageHandler ) {
+            DocumentStorageHandler documentStorageHandler,
+            ReaderHandler readerHandler ) {
         this.fileRepository         = fileRepository;
         this.documentStorageHandler = documentStorageHandler;
+        this.readerHandler          = readerHandler;
     }
 
 
@@ -58,5 +59,15 @@ public class FileController {
         byte[] content = documentStorageHandler.getContent( file.getPath() );
 
         return ResponseEntity.ok( content );
+    }
+
+
+    @PostMapping( path = "/{id:[0-9]+}/open" )
+    public ResponseEntity< byte[] > openFile( @PathVariable( "id" ) long id ) {
+        File file = fileRepository.findOrFail( id );
+
+        readerHandler.openFile( file );
+        
+        return ResponseEntity.noContent().build();
     }
 }
