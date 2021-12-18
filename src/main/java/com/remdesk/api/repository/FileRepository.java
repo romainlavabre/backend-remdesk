@@ -16,4 +16,7 @@ public interface FileRepository extends DefaultRepository< File > {
 
 
     Optional< File > findByPath( String path );
+
+
+    List< File > findAllByRoot();
 }

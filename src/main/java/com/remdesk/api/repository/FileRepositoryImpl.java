@@ -39,6 +39,12 @@ public class FileRepositoryImpl extends AbstractRepository< File > implements Fi
 
 
     @Override
+    public List< File > findAllByRoot() {
+        return fileJpa.findAllByFolderIsNull();
+    }
+
+
+    @Override
     protected Class< File > getClassType() {
         return File.class;
     }

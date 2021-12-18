@@ -18,4 +18,7 @@ public interface FileJpa extends JpaRepository< File, Long > {
 
 
     Optional< File > findByPath( String path );
+
+
+    List< File > findAllByFolderIsNull();
 }
