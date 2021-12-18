@@ -32,7 +32,7 @@ public class RemdeskApiApplication {
                 final String origins = environment.getEnv( "request.allowed-origin" );
 
                 registry.addMapping( pattern )
-                        .allowedMethods( "GET", "POST", "PUT", "DELETE" )
+                        .allowedMethods( "GET", "POST", "PUT", "DELETE", "PATCH" )
                         .allowedOrigins( origins )
                         .exposedHeaders( "Location", "Authorization" );
             }

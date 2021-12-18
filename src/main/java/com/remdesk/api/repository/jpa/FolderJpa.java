@@ -13,4 +13,7 @@ import java.util.List;
 public interface FolderJpa extends JpaRepository< Folder, Long > {
 
     List< Folder > findAllByParent( Folder folder );
+
+
+    List< Folder > findAllByParentIsNull();
 }

@@ -31,6 +31,12 @@ public class FolderRepositoryImpl extends AbstractRepository< Folder > implement
 
 
     @Override
+    public List< Folder > findAllByRoot() {
+        return folderJpa.findAllByParentIsNull();
+    }
+
+
+    @Override
     protected Class< Folder > getClassType() {
         return Folder.class;
     }

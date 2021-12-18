@@ -10,4 +10,7 @@ import java.util.List;
 public interface FolderRepository extends DefaultRepository< Folder > {
 
     List< Folder > findAllByParent( Folder folder );
+
+
+    List< Folder > findAllByRoot();
 }
