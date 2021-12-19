@@ -8,10 +8,10 @@
         <version>2.4.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.replace</groupId>
-    <artifactId>replace</artifactId>
+    <groupId>com.remdesk</groupId>
+    <artifactId>api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>replace</name>
+    <name>Remdesk-Api</name>
     <description>Basic framework installation</description>
     <properties>
         <java.version>11</java.version>
@@ -21,12 +21,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
-        </dependency>
-        <!-- TOP -->
-        <dependency>
-            <groupId>org.reflections</groupId>
-            <artifactId>reflections</artifactId>
-            <version>0.10.2</version>
         </dependency>
         <!-- TEST -->
         <dependency>

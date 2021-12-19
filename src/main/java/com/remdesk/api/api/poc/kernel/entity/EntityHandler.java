@@ -1,16 +1,15 @@
 package com.remdesk.api.api.poc.kernel.entity;
 
 import com.remdesk.api.api.poc.annotation.PocEnabled;
-import com.remdesk.api.api.poc.kernel.router.Resolver;
+import com.remdesk.api.configuration.poc.Subject;
 import com.remdesk.api.repository.DefaultRepository;
-import org.reflections.Reflections;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Romain Lavabre <romainlavabre98@gmail.com>
@@ -47,11 +46,8 @@ public class EntityHandler {
     }
 
 
-    protected Set< Class< ? > > getTypesAnnotated() {
-        String      basePackage = Resolver.class.getPackage().getName().replace( ".api.poc.kernel.router", "" );
-        Reflections reflections = new Reflections( basePackage );
-
-        return reflections.getTypesAnnotatedWith( PocEnabled.class );
+    protected List< Class< ? > > getTypesAnnotated() {
+        return Subject.getSubject();
     }
 
 

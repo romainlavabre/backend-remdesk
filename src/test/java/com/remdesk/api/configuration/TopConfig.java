@@ -1,23 +1,15 @@
 package com.remdesk.api.configuration;
 
-import com.remdesk.api.entity.Card;
-import com.remdesk.api.entity.Credential;
-import com.remdesk.api.entity.File;
-import com.remdesk.api.entity.Folder;
+import com.remdesk.api.configuration.poc.Subject;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * @author Romain Lavabre <romainlavabre98@gmail.com>
  */
 public class TopConfig {
 
-    public static Set< Class< ? > > getSubscribers() {
-        return Set.of(
-                Card.class,
-                Credential.class,
-                Folder.class,
-                File.class
-        );
+    public static List< Class< ? > > getSubscribers() {
+        return Subject.getSubject();
     }
 }
