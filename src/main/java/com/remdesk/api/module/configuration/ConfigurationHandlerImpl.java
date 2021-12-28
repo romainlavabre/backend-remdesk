@@ -8,6 +8,7 @@ import com.remdesk.api.parameter.FileSoftwareUsageParameter;
 import com.remdesk.api.parameter.StorageParameter;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
@@ -112,6 +113,7 @@ public class ConfigurationHandlerImpl implements ConfigurationHandler {
 
 
     @Bean
+    @DependsOn( {"FileSystemHandler"} )
     public DataSource getDataSource() {
         DatabaseConfiguration databaseConfiguration = getDatabaseConfig();
 

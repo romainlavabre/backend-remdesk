@@ -1,5 +1,9 @@
 package com.remdesk.api.module.fs;
 
+import com.remdesk.api.api.environment.Environment;
+import com.remdesk.api.configuration.environment.Variable;
+import org.springframework.stereotype.Service;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -10,9 +14,17 @@ import java.util.StringJoiner;
 /**
  * @author Romain Lavabre <romainlavabre98@gmail.com>
  */
+@Service( "FileSystemHandler" )
 public class FileSystemHandler {
-    private static final String HIDDEN_DIRECTORY = ".remdesk";
-    private static       String ROOT;
+    private static  String            ROOT;
+    private static  FileSystemHandler fileSystemHandler;
+    protected final Environment       environment;
+
+
+    public FileSystemHandler( Environment environment ) {
+        this.environment  = environment;
+        fileSystemHandler = this;
+    }
 
 
     public static File writeFile( String path, String data ) {
@@ -93,9 +105,9 @@ public class FileSystemHandler {
         }
 
         if ( OsResolver.isUnix() ) {
-            ROOT = System.getProperty( "user.home" ) + "/" + HIDDEN_DIRECTORY;
+            ROOT = System.getProperty( "user.home" ) + "/" + hiddenDirectory();
         } else {
-            ROOT = System.getProperty( "user.home" ) + "\\" + HIDDEN_DIRECTORY;
+            ROOT = System.getProperty( "user.home" ) + "\\" + hiddenDirectory();
         }
 
         createDirectory( "" );
@@ -109,5 +121,12 @@ public class FileSystemHandler {
 
     private static String getDirectorySeparator() {
         return OsResolver.isUnix() ? "/" : "\\";
+    }
+
+
+    private static String hiddenDirectory() {
+        return fileSystemHandler
+                .environment
+                .getEnv( Variable.HIDDEN_FILENAME );
     }
 }
