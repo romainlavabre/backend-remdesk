@@ -55,8 +55,10 @@ public class FileTest {
     public void create_success() {
 
         PocMock pocMock = PocClient.getMocker();
-        Mockito.when( pocMock.getMock( FolderRepository.class ).findOrFail( 1L ) ).thenReturn( new Folder() );
-        Mockito.when( pocMock.getMock( DocumentStorageHandler.class ).create( Mockito.anyString(), Mockito.any( byte[].class ) ) ).thenReturn( true );
+        Mockito.when( pocMock.getMock( FolderRepository.class ).findOrFail( 1L ) )
+               .thenReturn( new Folder() );
+        Mockito.when( pocMock.getMock( DocumentStorageHandler.class ).create( Mockito.anyString(), Mockito.any( byte[].class ) ) )
+               .thenReturn( true );
 
         for ( Map< String, Map< String, Object > > payload : dp_create_success() ) {
             UploadedFile uploadedFile = null;
@@ -91,9 +93,13 @@ public class FileTest {
     @Test
     public void create_fail() {
 
-        Mockito.when( PocClient.getMocker().getMock( FolderRepository.class ).findOrFail( 1L ) ).thenReturn( new Folder() );
+        PocMock pocMock = PocClient.getMocker();
 
-        for ( Map< String, Map< String, Object > > payload : dp_create_success() ) {
+        Mockito.when( pocMock.getMock( FolderRepository.class ).findOrFail( 1L ) ).thenReturn( new Folder() );
+        Mockito.when( pocMock.getMock( DocumentStorageHandler.class ).create( Mockito.anyString(), Mockito.any( byte[].class ) ) )
+               .thenReturn( true );
+
+        for ( Map< String, Map< String, Object > > payload : dp_create_fail() ) {
             UploadedFile uploadedFile = null;
 
             if ( payload.get( "file" ).values().size() > 0 ) {
@@ -108,12 +114,6 @@ public class FileTest {
                              .execute( true )
                              .is4xxCode()
                              .getBodyAsMap();
-
-            Assertions.assertEquals( body.get( "name" ), payload.get( "param" ).get( "file_name" ) );
-
-            if ( payload.get( "param" ).get( "file_folder_id" ) != null ) {
-                Assertions.assertNotNull( body.get( "folder_id" ) );
-            }
         }
     }
 
@@ -137,6 +137,43 @@ public class FileTest {
                 Map.of(
                         "param", Map.of(
                                 "file_name", "File 2"
+                        ),
+                        "file", Map.of(
+                                "file_file", uploadedFile
+                        )
+                )
+        );
+    }
+
+
+    private List< Map< String, Map< String, Object > > > dp_create_fail() {
+        UploadedFile uploadedFile = new UploadedFileImpl();
+        uploadedFile.setContent( new byte[]{1, 4, 2, 5, 1} );
+        uploadedFile.setContentType( "application/pdf" );
+        uploadedFile.setName( "name" );
+
+        return List.of(
+                Map.of(
+                        "param", Map.of(
+                                "file_folder_id", 1
+                        ),
+                        "file", Map.of(
+                                "file_file", uploadedFile
+                        )
+                ),
+                Map.of(
+                        "param", Map.of(
+                                "file_name", "",
+                                "file_folder_id", 1
+                        ),
+                        "file", Map.of(
+                                "file_file", uploadedFile
+                        )
+                ),
+                Map.of(
+                        "param", Map.of(
+                                "file_name", "  ",
+                                "file_folder_id", 1
                         ),
                         "file", Map.of(
                                 "file_file", uploadedFile
