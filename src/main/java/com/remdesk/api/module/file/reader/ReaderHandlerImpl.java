@@ -4,7 +4,7 @@ import com.remdesk.api.api.storage.document.DocumentStorageHandler;
 import com.remdesk.api.api.upload.ContentTypeResolver;
 import com.remdesk.api.entity.File;
 import com.remdesk.api.module.configuration.ConfigurationHandler;
-import com.remdesk.api.module.configuration.FileSoftwareUsageConfiguration;
+import com.remdesk.api.module.configuration.FileStorageConfiguration;
 import com.remdesk.api.module.fs.FileSystemHandler;
 import org.springframework.stereotype.Service;
 
@@ -55,8 +55,8 @@ public class ReaderHandlerImpl implements ReaderHandler {
 
 
     protected String getCommand( java.io.File temporary, File origin ) {
-        FileSoftwareUsageConfiguration fileSoftwareUsageConfiguration = configurationHandler.getFileSoftwareUsageConfiguration();
-        Map< String, Object >          customCommands                 = fileSoftwareUsageConfiguration.getCustomCommands();
+        FileStorageConfiguration fileStorageConfiguration = configurationHandler.getFileStorageConfig();
+        Map< String, Object >    customCommands           = fileStorageConfiguration.getCustomCommands();
 
         if ( customCommands.containsKey( origin.getContentType() ) ) {
             return customCommands
@@ -65,7 +65,7 @@ public class ReaderHandlerImpl implements ReaderHandler {
                     .replace( "{file}", temporary.getAbsolutePath() );
         }
 
-        return fileSoftwareUsageConfiguration
+        return fileStorageConfiguration
                 .getDefaultCommand()
                 .replace( "{file}", temporary.getAbsolutePath() );
     }

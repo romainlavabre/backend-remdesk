@@ -1,9 +1,8 @@
 package com.remdesk.api.controller;
 
-import com.remdesk.api.api.json.Encoder;
 import com.remdesk.api.api.request.Request;
-import com.remdesk.api.configuration.json.GroupType;
 import com.remdesk.api.module.configuration.ConfigurationHandler;
+import com.remdesk.api.module.configuration.FileStorageConfiguration;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,7 +34,7 @@ public class ConfigurationController {
     public ResponseEntity< Map< String, Boolean > > getLoadedConfig() {
         return ResponseEntity.ok( Map.of(
                 "database", configurationHandler.getDatabaseConfig().hasConfiguration(),
-                "storage", configurationHandler.getFileStorageConfig().hasConfiguration()
+                "storage", configurationHandler.getFileStorageConfig().hasCredentialsConfiguration()
         ) );
     }
 
@@ -43,8 +42,13 @@ public class ConfigurationController {
     @GetMapping( path = "/file_software_usage" )
     public ResponseEntity< Map< String, Object > > getFileSoftwareUsage() {
 
+        FileStorageConfiguration fileStorageConfiguration = configurationHandler.getFileStorageConfig();
+
         return ResponseEntity
-                .ok( Encoder.encode( configurationHandler.getFileSoftwareUsageConfiguration(), GroupType.GUEST ) );
+                .ok( Map.of(
+                        "default_command", fileStorageConfiguration.getDefaultCommand(),
+                        "custom_commands", fileStorageConfiguration.getCustomCommands()
+                ) );
     }
 
 

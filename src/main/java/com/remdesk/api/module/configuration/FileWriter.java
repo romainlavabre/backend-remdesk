@@ -21,9 +21,4 @@ public class FileWriter {
     public static void writeStorageFile( String data ) {
         FileSystemHandler.writeFile( FileSystemHandler.buildPath( List.of( STORAGE_FILE ) ), data );
     }
-
-
-    public static void writeFileSoftwareUsageFile( String data ) {
-        FileSystemHandler.writeFile( FileSystemHandler.buildPath( List.of( FILE_SOFTWARE_USAGE_FILE ) ), data );
-    }
 }

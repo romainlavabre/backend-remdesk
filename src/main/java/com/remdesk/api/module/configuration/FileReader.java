@@ -22,9 +22,4 @@ public class FileReader {
     public static File getStorageFile() {
         return FileSystemHandler.getFile( FileSystemHandler.buildPath( List.of( STORAGE_FILE ) ) );
     }
-
-
-    public static File getFileSoftwareUsageFile() {
-        return FileSystemHandler.getFile( FileSystemHandler.buildPath( List.of( FILE_SOFTWARE_USAGE_FILE ) ) );
-    }
 }

@@ -19,7 +19,4 @@ public interface ConfigurationHandler {
 
 
     FileStorageConfiguration getFileStorageConfig();
-
-
-    FileSoftwareUsageConfiguration getFileSoftwareUsageConfiguration();
 }

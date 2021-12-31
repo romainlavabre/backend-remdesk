@@ -45,7 +45,7 @@ public class S3 implements DocumentStorageHandler {
     public boolean create( final String path, final File file ) {
         FileStorageConfiguration fileStorageConfiguration = configurationHandler.getFileStorageConfig();
 
-        if ( !fileStorageConfiguration.hasConfiguration() ) {
+        if ( !fileStorageConfiguration.hasCredentialsConfiguration() ) {
             throw new HttpInternalServerErrorException( "Access not configured" );
         }
 
@@ -74,7 +74,7 @@ public class S3 implements DocumentStorageHandler {
     public boolean create( final String path, final ByteBuffer byteBuffer ) {
         FileStorageConfiguration fileStorageConfiguration = configurationHandler.getFileStorageConfig();
 
-        if ( !fileStorageConfiguration.hasConfiguration() ) {
+        if ( !fileStorageConfiguration.hasCredentialsConfiguration() ) {
             throw new HttpInternalServerErrorException( "Access not configured" );
         }
 
@@ -94,7 +94,7 @@ public class S3 implements DocumentStorageHandler {
     public boolean create( final String path, final byte[] bytes ) {
         FileStorageConfiguration fileStorageConfiguration = configurationHandler.getFileStorageConfig();
 
-        if ( !fileStorageConfiguration.hasConfiguration() ) {
+        if ( !fileStorageConfiguration.hasCredentialsConfiguration() ) {
             throw new HttpInternalServerErrorException( "Access not configured" );
         }
 
@@ -115,7 +115,7 @@ public class S3 implements DocumentStorageHandler {
 
         FileStorageConfiguration fileStorageConfiguration = configurationHandler.getFileStorageConfig();
 
-        if ( !fileStorageConfiguration.hasConfiguration() ) {
+        if ( !fileStorageConfiguration.hasCredentialsConfiguration() ) {
             throw new HttpInternalServerErrorException( "Access not configured" );
         }
 
@@ -165,7 +165,7 @@ public class S3 implements DocumentStorageHandler {
     public String getUrl( final String path, final Integer time ) {
         FileStorageConfiguration fileStorageConfiguration = configurationHandler.getFileStorageConfig();
 
-        if ( !fileStorageConfiguration.hasConfiguration() ) {
+        if ( !fileStorageConfiguration.hasCredentialsConfiguration() ) {
             throw new HttpInternalServerErrorException( "Access not configured" );
         }
 
@@ -205,7 +205,7 @@ public class S3 implements DocumentStorageHandler {
     protected GetObjectRequest getObjectRequest( final String path ) {
         FileStorageConfiguration fileStorageConfiguration = configurationHandler.getFileStorageConfig();
 
-        if ( !fileStorageConfiguration.hasConfiguration() ) {
+        if ( !fileStorageConfiguration.hasCredentialsConfiguration() ) {
             throw new HttpInternalServerErrorException( "Access not configured" );
         }
 
@@ -223,7 +223,7 @@ public class S3 implements DocumentStorageHandler {
 
         FileStorageConfiguration fileStorageConfiguration = configurationHandler.getFileStorageConfig();
 
-        if ( !fileStorageConfiguration.hasConfiguration() ) {
+        if ( !fileStorageConfiguration.hasCredentialsConfiguration() ) {
             throw new HttpInternalServerErrorException( "Access not configured" );
         }
 

@@ -69,17 +69,17 @@ public class ConfigurationHandlerImpl implements ConfigurationHandler {
         String                defaultCommand = ( String ) request.getParameter( FileSoftwareUsageParameter.DEFAULT_COMMAND );
         Map< String, Object > customCommand  = ( Map< String, Object > ) request.getParameter( FileSoftwareUsageParameter.CUSTOM_COMMANDS );
 
-        FileSoftwareUsageConfiguration fileSoftwareUsageConfiguration = getFileSoftwareUsageConfiguration();
-        fileSoftwareUsageConfiguration
+        FileStorageConfiguration fileStorageConfiguration = getFileStorageConfig();
+        fileStorageConfiguration
                 .setDefaultCommand( defaultCommand );
 
-        fileSoftwareUsageConfiguration.getCustomCommands().clear();
+        fileStorageConfiguration.getCustomCommands().clear();
 
         for ( Map.Entry< String, Object > entry : customCommand.entrySet() ) {
-            fileSoftwareUsageConfiguration.addCustomCommand( entry.getKey(), entry.getValue() != null ? entry.getValue().toString() : null );
+            fileStorageConfiguration.addCustomCommand( entry.getKey(), entry.getValue() != null ? entry.getValue().toString() : null );
         }
 
-        fileSoftwareUsageConfiguration.writeNewConfig();
+        fileStorageConfiguration.writeNewConfig();
     }
 
 
@@ -92,12 +92,6 @@ public class ConfigurationHandlerImpl implements ConfigurationHandler {
     @Override
     public FileStorageConfiguration getFileStorageConfig() {
         return FileStorageConfiguration.getInstance();
-    }
-
-
-    @Override
-    public FileSoftwareUsageConfiguration getFileSoftwareUsageConfiguration() {
-        return FileSoftwareUsageConfiguration.getInstance();
     }
 
 
