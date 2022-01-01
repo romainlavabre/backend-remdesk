@@ -4,10 +4,7 @@ import com.remdesk.api.api.request.Request;
 import com.remdesk.api.module.configuration.ConfigurationHandler;
 import com.remdesk.api.module.configuration.FileStorageConfiguration;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -52,6 +49,18 @@ public class ConfigurationController {
     }
 
 
+    @GetMapping( path = "/preserve_network_level" )
+    public ResponseEntity< Map< String, Object > > getPreserveNetworkLevel() {
+
+        FileStorageConfiguration fileStorageConfiguration = configurationHandler.getFileStorageConfig();
+
+        return ResponseEntity
+                .ok( Map.of(
+                        "preserve_network_level", fileStorageConfiguration.getPreserveNetworkLevel()
+                ) );
+    }
+
+
     @PostMapping( path = "/database" )
     public ResponseEntity< Void > database() {
         configurationHandler.insertDatabaseConfig( request );
@@ -65,6 +74,16 @@ public class ConfigurationController {
     @PostMapping( path = "/storage" )
     public ResponseEntity< Void > storage() {
         configurationHandler.insertFileStorageConfig( request );
+
+        return ResponseEntity
+                .noContent()
+                .build();
+    }
+
+
+    @PatchMapping( path = "/preserve_network_level" )
+    public ResponseEntity< Void > preserveNetworkLevel() {
+        configurationHandler.updatePreserveNetworkLevel( request );
 
         return ResponseEntity
                 .noContent()

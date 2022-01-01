@@ -1,5 +1,7 @@
 package com.remdesk.api.module.fs;
 
+import com.remdesk.api.module.configuration.ConfigurationHandler;
+import com.remdesk.api.module.configuration.FileStorageConfiguration;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PreDestroy;
@@ -12,6 +14,14 @@ import java.util.List;
 @Service
 public class Clearer {
 
+    protected final ConfigurationHandler configurationHandler;
+
+
+    public Clearer( ConfigurationHandler configurationHandler ) {
+        this.configurationHandler = configurationHandler;
+    }
+
+
     @PreDestroy
     public void clearTemporary() {
         File directory = FileSystemHandler.getFile( FileSystemHandler.buildPath( List.of( "tmp" ) ) );
@@ -19,7 +29,7 @@ public class Clearer {
         if ( directory == null ) {
             return;
         }
-        
+
         clear( directory );
     }
 
@@ -32,7 +42,13 @@ public class Clearer {
             return;
         }
 
-        clear( directory );
+        for ( File children : directory.listFiles() ) {
+            if ( configurationHandler.getFileStorageConfig().getPreserveNetworkLevel() == FileStorageConfiguration.PRESERVE_NETWORK_LEVEL_0
+                    || configurationHandler.getFileStorageConfig().getPreserveNetworkLevel() == FileStorageConfiguration.PRESERVE_NETWORK_LEVEL_1
+                    || children.getName().matches( "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\\..*" ) ) {
+                children.delete();
+            }
+        }
     }
 
 

@@ -4,8 +4,8 @@ import com.remdesk.api.api.request.Request;
 import com.remdesk.api.configuration.response.Message;
 import com.remdesk.api.exception.HttpUnprocessableEntityException;
 import com.remdesk.api.parameter.DatabaseParameter;
-import com.remdesk.api.parameter.FileSoftwareUsageParameter;
 import com.remdesk.api.parameter.StorageParameter;
+import com.remdesk.api.util.Cast;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.DependsOn;
@@ -66,8 +66,8 @@ public class ConfigurationHandlerImpl implements ConfigurationHandler {
 
     @Override
     public void insertFileSoftwareUsage( Request request ) {
-        String                defaultCommand = ( String ) request.getParameter( FileSoftwareUsageParameter.DEFAULT_COMMAND );
-        Map< String, Object > customCommand  = ( Map< String, Object > ) request.getParameter( FileSoftwareUsageParameter.CUSTOM_COMMANDS );
+        String                defaultCommand = ( String ) request.getParameter( StorageParameter.DEFAULT_COMMAND );
+        Map< String, Object > customCommand  = ( Map< String, Object > ) request.getParameter( StorageParameter.CUSTOM_COMMANDS );
 
         FileStorageConfiguration fileStorageConfiguration = getFileStorageConfig();
         fileStorageConfiguration
@@ -80,6 +80,17 @@ public class ConfigurationHandlerImpl implements ConfigurationHandler {
         }
 
         fileStorageConfiguration.writeNewConfig();
+    }
+
+
+    @Override
+    public void updatePreserveNetworkLevel( Request request ) {
+        Integer preserveNetworkLevel = Cast.getInt( request.getParameter( StorageParameter.PRESERVE_NETWORK_LEVEL ) );
+
+        FileStorageConfiguration fileStorageConfiguration = getFileStorageConfig();
+        fileStorageConfiguration
+                .setPreserveNetworkLevel( preserveNetworkLevel )
+                .writeNewConfig();
     }
 
 

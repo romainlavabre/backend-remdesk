@@ -17,7 +17,10 @@ import java.util.Map;
  */
 public class FileStorageConfiguration {
 
-    private static FileStorageConfiguration fileStorageConfiguration;
+    private static      FileStorageConfiguration fileStorageConfiguration;
+    public static final int                      PRESERVE_NETWORK_LEVEL_0 = 0;
+    public static final int                      PRESERVE_NETWORK_LEVEL_1 = 1;
+    public static final int                      PRESERVE_NETWORK_LEVEL_2 = 2;
 
     private String clientId;
 
@@ -31,9 +34,12 @@ public class FileStorageConfiguration {
 
     private Map< String, Object > customCommands;
 
+    private int preserveNetworkLevel;
+
 
     private FileStorageConfiguration() {
         customCommands           = new HashMap<>();
+        preserveNetworkLevel     = PRESERVE_NETWORK_LEVEL_2;
         fileStorageConfiguration = this;
         loadConfig();
     }
@@ -64,34 +70,13 @@ public class FileStorageConfiguration {
     }
 
 
-    public FileStorageConfiguration setDefaultCommand( String defaultCommand ) {
-        if ( defaultCommand == null || defaultCommand.isBlank() ) {
-            throw new HttpUnprocessableEntityException( Message.STORAGE_CONFIGURATION_DEFAULT_COMMAND_REQUIRED );
-        }
-
-        this.defaultCommand = defaultCommand;
-
-        return this;
-    }
-
-
     public Map< String, Object > getCustomCommands() {
         return customCommands;
     }
 
 
-    public FileStorageConfiguration addCustomCommand( String contentType, String command ) {
-        if ( contentType == null || contentType.isBlank() ) {
-            throw new HttpUnprocessableEntityException( Message.STORAGE_CONFIGURATION_CONTENT_TYPE_REQUIRED );
-        }
-
-        if ( command == null || command.isBlank() ) {
-            throw new HttpUnprocessableEntityException( Message.STORAGE_CONFIGURATION_COMMAND_REQUIRED );
-        }
-
-        customCommands.put( contentType, command );
-
-        return this;
+    public int getPreserveNetworkLevel() {
+        return preserveNetworkLevel;
     }
 
 
@@ -152,6 +137,49 @@ public class FileStorageConfiguration {
     }
 
 
+    public FileStorageConfiguration setDefaultCommand( String defaultCommand ) {
+        if ( defaultCommand == null || defaultCommand.isBlank() ) {
+            throw new HttpUnprocessableEntityException( Message.STORAGE_CONFIGURATION_DEFAULT_COMMAND_REQUIRED );
+        }
+
+        this.defaultCommand = defaultCommand;
+
+        return this;
+    }
+
+
+    public FileStorageConfiguration addCustomCommand( String contentType, String command ) {
+        if ( contentType == null || contentType.isBlank() ) {
+            throw new HttpUnprocessableEntityException( Message.STORAGE_CONFIGURATION_CONTENT_TYPE_REQUIRED );
+        }
+
+        if ( command == null || command.isBlank() ) {
+            throw new HttpUnprocessableEntityException( Message.STORAGE_CONFIGURATION_COMMAND_REQUIRED );
+        }
+
+        customCommands.put( contentType, command );
+
+        return this;
+    }
+
+
+    public FileStorageConfiguration setPreserveNetworkLevel( Integer preserveNetworkLevel ) {
+        if ( preserveNetworkLevel == null ) {
+            throw new HttpUnprocessableEntityException( Message.STORAGE_CONFIGURATION_PRESERVE_NETWORK_LEVEL_REQUIRED );
+        }
+
+        if ( preserveNetworkLevel != PRESERVE_NETWORK_LEVEL_0
+                && preserveNetworkLevel != PRESERVE_NETWORK_LEVEL_1
+                && preserveNetworkLevel != PRESERVE_NETWORK_LEVEL_2 ) {
+            throw new HttpUnprocessableEntityException( Message.STORAGE_CONFIGURATION_PRESERVE_NETWORK_LEVEL_INVALID );
+        }
+
+        this.preserveNetworkLevel = preserveNetworkLevel;
+
+        return this;
+    }
+
+
     public static FileStorageConfiguration getInstance() {
         if ( fileStorageConfiguration == null ) {
             new FileStorageConfiguration();
@@ -169,6 +197,7 @@ public class FileStorageConfiguration {
         jsonObject.put( "zone", zone );
         jsonObject.put( "defaultCommand", defaultCommand );
         jsonObject.put( "customCommands", customCommands );
+        jsonObject.put( "preserveNetworkLevel", preserveNetworkLevel );
 
         FileWriter.writeStorageFile( jsonObject.toString() );
 
@@ -184,12 +213,13 @@ public class FileStorageConfiguration {
                 String content = Files.readString( Path.of( file.getPath() ) );
 
                 JSONObject jsonObject = new JSONObject( content );
-                clientId       = jsonObject.getString( "clientId" );
-                clientSecret   = jsonObject.getString( "clientSecret" );
-                zone           = jsonObject.getString( "zone" );
-                compartment    = jsonObject.getString( "compartment" );
-                defaultCommand = jsonObject.has( "defaultCommand" ) ? jsonObject.getString( "defaultCommand" ) : null;
-                customCommands = jsonObject.has( "customCommands" ) ? jsonObject.getJSONObject( "customCommands" ).toMap() : new HashMap<>();
+                clientId             = jsonObject.getString( "clientId" );
+                clientSecret         = jsonObject.getString( "clientSecret" );
+                zone                 = jsonObject.getString( "zone" );
+                compartment          = jsonObject.getString( "compartment" );
+                defaultCommand       = jsonObject.has( "defaultCommand" ) ? jsonObject.getString( "defaultCommand" ) : null;
+                customCommands       = jsonObject.has( "customCommands" ) ? jsonObject.getJSONObject( "customCommands" ).toMap() : new HashMap<>();
+                preserveNetworkLevel = jsonObject.has( "preserveNetworkLevel" ) ? jsonObject.getInt( "preserveNetworkLevel" ) : preserveNetworkLevel;
             } catch ( IOException e ) {
                 e.printStackTrace();
             }

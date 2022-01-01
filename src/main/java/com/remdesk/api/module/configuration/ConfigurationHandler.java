@@ -15,6 +15,9 @@ public interface ConfigurationHandler {
     void insertFileSoftwareUsage( Request request );
 
 
+    void updatePreserveNetworkLevel( Request request );
+
+
     DatabaseConfiguration getDatabaseConfig();
 
 
