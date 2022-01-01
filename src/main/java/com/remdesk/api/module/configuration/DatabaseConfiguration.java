@@ -26,7 +26,7 @@ public class DatabaseConfiguration {
 
     private String password;
 
-    private String driver;
+    private String encryptionKey;
 
 
     private DatabaseConfiguration() {
@@ -72,6 +72,11 @@ public class DatabaseConfiguration {
         }
 
         return null;
+    }
+
+
+    public String getEncryptionKey() {
+        return encryptionKey;
     }
 
 
@@ -131,12 +136,20 @@ public class DatabaseConfiguration {
     }
 
 
+    public DatabaseConfiguration setEncryptionKey( String encryptionKey ) {
+        this.encryptionKey = encryptionKey;
+
+        return this;
+    }
+
+
     public boolean hasConfiguration() {
         return software != null
                 && port != null
                 && host != null
                 && username != null
-                && password != null;
+                && password != null
+                && encryptionKey != null;
     }
 
 
@@ -150,11 +163,12 @@ public class DatabaseConfiguration {
 
 
     public void clear() {
-        software = null;
-        port     = null;
-        host     = null;
-        username = null;
-        password = null;
+        software      = null;
+        port          = null;
+        host          = null;
+        username      = null;
+        password      = null;
+        encryptionKey = null;
         loadConfig();
     }
 
@@ -166,6 +180,7 @@ public class DatabaseConfiguration {
         jsonObject.put( "host", host );
         jsonObject.put( "username", username );
         jsonObject.put( "password", password );
+        jsonObject.put( "encryption_key", encryptionKey );
 
         FileWriter.writeDatabaseFile( jsonObject.toString() );
 
@@ -181,11 +196,12 @@ public class DatabaseConfiguration {
                 String content = Files.readString( Path.of( file.getPath() ) );
 
                 JSONObject jsonObject = new JSONObject( content );
-                software = jsonObject.getString( "software" );
-                port     = jsonObject.getString( "port" );
-                host     = jsonObject.getString( "host" );
-                username = jsonObject.getString( "username" );
-                password = jsonObject.getString( "password" );
+                software      = jsonObject.getString( "software" );
+                port          = jsonObject.getString( "port" );
+                host          = jsonObject.getString( "host" );
+                username      = jsonObject.getString( "username" );
+                password      = jsonObject.getString( "password" );
+                encryptionKey = jsonObject.has( "encryption_key" ) ? jsonObject.getString( "encryption_key" ) : null;
             } catch ( IOException e ) {
                 e.printStackTrace();
             }

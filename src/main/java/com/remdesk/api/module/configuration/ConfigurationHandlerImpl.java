@@ -24,11 +24,12 @@ import java.util.Map;
 public class ConfigurationHandlerImpl implements ConfigurationHandler {
     @Override
     public void insertDatabaseConfig( Request request ) {
-        String software = ( String ) request.getParameter( DatabaseParameter.SOFTWARE );
-        String host     = ( String ) request.getParameter( DatabaseParameter.HOST );
-        String port     = ( String ) request.getParameter( DatabaseParameter.PORT );
-        String username = ( String ) request.getParameter( DatabaseParameter.USERNAME );
-        String password = ( String ) request.getParameter( DatabaseParameter.PASSWORD );
+        String software      = ( String ) request.getParameter( DatabaseParameter.SOFTWARE );
+        String host          = ( String ) request.getParameter( DatabaseParameter.HOST );
+        String port          = ( String ) request.getParameter( DatabaseParameter.PORT );
+        String username      = ( String ) request.getParameter( DatabaseParameter.USERNAME );
+        String password      = ( String ) request.getParameter( DatabaseParameter.PASSWORD );
+        String encryptionKey = ( String ) request.getParameter( DatabaseParameter.ENCRYPTION_KEY );
 
 
         DatabaseConfiguration databaseConfiguration = getDatabaseConfig();
@@ -36,7 +37,8 @@ public class ConfigurationHandlerImpl implements ConfigurationHandler {
                              .setHost( host )
                              .setPort( port )
                              .setUsername( username )
-                             .setPassword( password );
+                             .setPassword( password )
+                             .setEncryptionKey( encryptionKey );
 
         if ( !testConnection( databaseConfiguration ) ) {
             databaseConfiguration.clear();

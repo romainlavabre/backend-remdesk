@@ -5,6 +5,7 @@ import com.remdesk.api.api.json.annotation.Json;
 import com.remdesk.api.api.poc.annotation.*;
 import com.remdesk.api.configuration.json.GroupType;
 import com.remdesk.api.configuration.response.Message;
+import com.remdesk.api.entity.encrypt.EncryptField;
 import com.remdesk.api.exception.HttpUnprocessableEntityException;
 import com.remdesk.api.repository.CredentialRepository;
 
@@ -48,6 +49,7 @@ public class Credential {
             @Group( name = GroupType.GUEST )
     } )
     @Column( nullable = false, length = 600 )
+    @Convert( converter = EncryptField.class )
     private String username;
 
     @EntryPoint(
@@ -57,6 +59,7 @@ public class Credential {
             @Group( name = GroupType.GUEST )
     } )
     @Column( nullable = false, columnDefinition = "TEXT" )
+    @Convert( converter = EncryptField.class )
     private String password;
 
     @EntryPoint(
