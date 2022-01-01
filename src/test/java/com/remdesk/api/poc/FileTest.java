@@ -120,6 +120,24 @@ public class FileTest {
     }
 
 
+    @Test
+    public void delete() {
+
+        PocMock pocMock = PocClient.getMocker();
+
+        Mockito.when( pocMock.getMock( FileRepository.class ).findOrFail( 1L ) ).thenReturn( new File() );
+        Mockito.when( pocMock.getMock( DocumentStorageHandler.class ).remove( Mockito.anyString() ) )
+               .thenReturn( true );
+
+
+        PocClient.getClient()
+                 .delete( "/guest/files/1" )
+                 .execute( true )
+                 .is2xxCode()
+                 .getBodyAsMap();
+    }
+
+
     private List< Map< String, Map< String, Object > > > dp_create_success() {
         UploadedFile uploadedFile = new UploadedFileImpl();
         uploadedFile.setContent( new byte[]{1, 4, 2, 5, 1} );

@@ -504,6 +504,10 @@ All mock provided is cleared between tests.
 
 ### Versions
 
+##### 1.0.3
+
+- FIX Controller::delete
+
 ##### 1.0.2
 
 - FIX dependency version

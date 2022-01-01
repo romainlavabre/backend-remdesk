@@ -2,6 +2,7 @@ package com.remdesk.api.api.poc.kernel.entry;
 
 import com.remdesk.api.api.json.Encoder;
 import com.remdesk.api.api.poc.annotation.*;
+import com.remdesk.api.api.poc.annotation.Delete;
 import com.remdesk.api.api.poc.kernel.entity.EntityHandler;
 import com.remdesk.api.api.poc.kernel.exception.NoRouteMatchException;
 import com.remdesk.api.api.poc.kernel.router.RouteHandler;
@@ -185,7 +186,7 @@ public class Controller {
     @Transactional
     public ResponseEntity< Void > delete( @PathVariable( "id" ) final long id )
             throws Throwable {
-        final RouteHandler.Route route = this.routeHandler.getRoute( this.request, GetOne.class );
+        final RouteHandler.Route route = this.routeHandler.getRoute( this.request, Delete.class );
 
         final DefaultRepository< ? > defaultRepository = this.applicationContext.getBean( route.getRepository() );
 

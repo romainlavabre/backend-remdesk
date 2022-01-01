@@ -39,7 +39,12 @@ public class File {
                     authenticated = false,
                     triggers = {@Trigger( triggerId = TriggerIdentifier.FILE_UPLOAD_FILE, provideMe = true )}
             ),
-            delete = @Delete( authenticated = false, triggers = {@Trigger( triggerId = TriggerIdentifier.FILE_DELETE_FILE, provideMe = true )} ),
+            delete = @Delete(
+                    authenticated = false,
+                    triggers = {
+                            @Trigger( triggerId = TriggerIdentifier.FILE_DELETE_FILE, provideMe = true )
+                    }
+            ),
             unmanagedTriggers = {
                     @UnmanagedTrigger( id = TriggerIdentifier.FILE_UPLOAD_FILE, unmanagedExecutor = UploadFile.class ),
                     @UnmanagedTrigger( id = TriggerIdentifier.FILE_MOVE_FILE, unmanagedExecutor = MoveFile.class ),
