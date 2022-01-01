@@ -52,6 +52,19 @@ public class Clearer {
     }
 
 
+    public void purgeOpen() {
+        File directory = FileSystemHandler.getFile( FileSystemHandler.buildPath( List.of( "open" ) ) );
+
+        if ( directory == null ) {
+            return;
+        }
+
+        for ( File children : directory.listFiles() ) {
+            children.delete();
+        }
+    }
+
+
     private void clear( File directory ) {
         for ( File children : directory.listFiles() ) {
             children.delete();
