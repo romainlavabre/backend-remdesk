@@ -54,6 +54,12 @@ public class EncryptField implements AttributeConverter< String, String > {
     @Override
     public String convertToEntityAttribute( String data ) {
         try {
+            load();
+        } catch ( NoSuchPaddingException | NoSuchAlgorithmException | NullPointerException e ) {
+            throw new HttpInternalServerErrorException( Message.DATABASE_CONFIGURATION_ENCRYPTION_KEY_NOT_SET );
+        }
+        
+        try {
             cipher.init( Cipher.DECRYPT_MODE, key );
             return new String( cipher.doFinal( Base64.getDecoder().decode( data ) ) );
         } catch ( InvalidKeyException | BadPaddingException | IllegalBlockSizeException e ) {
