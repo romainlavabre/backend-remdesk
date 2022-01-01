@@ -9,6 +9,7 @@ import com.remdesk.api.entity.File;
 import com.remdesk.api.exception.HttpConflictException;
 import com.remdesk.api.exception.HttpInternalServerErrorException;
 import com.remdesk.api.exception.HttpUnprocessableEntityException;
+import com.remdesk.api.module.configuration.Encryptor;
 import com.remdesk.api.repository.FileRepository;
 import org.springframework.stereotype.Service;
 
@@ -20,13 +21,16 @@ public class UploadFile implements UnmanagedTrigger {
 
     protected final DocumentStorageHandler documentStorageHandler;
     protected final FileRepository         fileRepository;
+    protected final Encryptor              encryptor;
 
 
     public UploadFile(
             DocumentStorageHandler documentStorageHandler,
-            FileRepository fileRepository ) {
+            FileRepository fileRepository,
+            Encryptor encryptor ) {
         this.documentStorageHandler = documentStorageHandler;
         this.fileRepository         = fileRepository;
+        this.encryptor              = encryptor;
     }
 
 
@@ -44,7 +48,12 @@ public class UploadFile implements UnmanagedTrigger {
 
         assertNotDuplication( file.getPath() );
 
-        boolean result = documentStorageHandler.create( file.getPath(), uploadedFile.getContent() );
+        boolean result = documentStorageHandler.create(
+                file.getPath(),
+                file.isEncrypted()
+                        ? encryptor.encrypt( uploadedFile.getContent() )
+                        : uploadedFile.getContent()
+        );
 
         if ( !result ) {
             throw new HttpInternalServerErrorException( Message.FILE_UNABLE_TO_UPLOAD );

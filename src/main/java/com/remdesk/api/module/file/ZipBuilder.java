@@ -2,6 +2,7 @@ package com.remdesk.api.module.file;
 
 import com.remdesk.api.api.storage.document.DocumentStorageHandler;
 import com.remdesk.api.entity.Folder;
+import com.remdesk.api.module.configuration.Encryptor;
 import com.remdesk.api.module.fs.FileSystemHandler;
 import com.remdesk.api.repository.FileRepository;
 import org.springframework.stereotype.Service;
@@ -23,13 +24,16 @@ public class ZipBuilder {
 
     protected final FileRepository         fileRepository;
     protected final DocumentStorageHandler documentStorageHandler;
+    protected final Encryptor              encryptor;
 
 
     public ZipBuilder(
             FileRepository fileRepository,
-            DocumentStorageHandler documentStorageHandler ) {
+            DocumentStorageHandler documentStorageHandler,
+            Encryptor encryptor ) {
         this.fileRepository         = fileRepository;
         this.documentStorageHandler = documentStorageHandler;
+        this.encryptor              = encryptor;
     }
 
 
@@ -43,7 +47,9 @@ public class ZipBuilder {
 
                 File created = FileSystemHandler.writeFile(
                         FileSystemHandler.buildPath( List.of( "tmp", UUID.randomUUID().toString() ) ),
-                        documentStorageHandler.getContent( file.getPath() )
+                        file.isEncrypted()
+                                ? encryptor.decrypt( documentStorageHandler.getContent( file.getPath() ) )
+                                : documentStorageHandler.getContent( file.getPath() )
                 );
 
                 zipOutputStream.putNextEntry( new ZipEntry( file.getName() ) );

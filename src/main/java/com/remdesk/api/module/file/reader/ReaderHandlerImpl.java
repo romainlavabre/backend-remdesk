@@ -4,6 +4,7 @@ import com.remdesk.api.api.storage.document.DocumentStorageHandler;
 import com.remdesk.api.api.upload.ContentTypeResolver;
 import com.remdesk.api.entity.File;
 import com.remdesk.api.module.configuration.ConfigurationHandler;
+import com.remdesk.api.module.configuration.Encryptor;
 import com.remdesk.api.module.configuration.FileStorageConfiguration;
 import com.remdesk.api.module.fs.FileSystemHandler;
 import org.springframework.stereotype.Service;
@@ -23,13 +24,16 @@ public class ReaderHandlerImpl implements ReaderHandler {
 
     protected final DocumentStorageHandler documentStorageHandler;
     protected final ConfigurationHandler   configurationHandler;
+    protected final Encryptor              encryptor;
 
 
     public ReaderHandlerImpl(
             DocumentStorageHandler documentStorageHandler,
-            ConfigurationHandler configurationHandler ) {
+            ConfigurationHandler configurationHandler,
+            Encryptor encryptor ) {
         this.documentStorageHandler = documentStorageHandler;
         this.configurationHandler   = configurationHandler;
+        this.encryptor              = encryptor;
     }
 
 
@@ -73,7 +77,9 @@ public class ReaderHandlerImpl implements ReaderHandler {
         } else {
             temporary = FileSystemHandler.writeFile(
                     path,
-                    documentStorageHandler.getContent( file.getPath() )
+                    file.isEncrypted()
+                            ? encryptor.decrypt( documentStorageHandler.getContent( file.getPath() ) )
+                            : documentStorageHandler.getContent( file.getPath() )
             );
         }
 

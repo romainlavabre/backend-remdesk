@@ -35,7 +35,7 @@ public class File {
             getOne = @GetOne( enabled = true, authenticated = false ),
             getAllBy = {@GetAllBy( entity = Folder.class, authenticated = false )},
             post = @Post(
-                    fields = {"name", "folder"},
+                    fields = {"name", "encrypted", "folder"},
                     authenticated = false,
                     triggers = {@Trigger( triggerId = TriggerIdentifier.FILE_UPLOAD_FILE, provideMe = true )}
             ),
@@ -78,6 +78,8 @@ public class File {
             @Group( name = GroupType.GUEST )
     } )
     private long size;
+
+    private boolean encrypted;
 
     @Json( groups = {
             @Group( name = GroupType.GUEST, key = "created_at" )
@@ -170,6 +172,22 @@ public class File {
         }
 
         this.size = size;
+
+        return this;
+    }
+
+
+    public boolean isEncrypted() {
+        return encrypted;
+    }
+
+
+    public File setEncrypted( Boolean encrypted ) {
+        if ( encrypted == null ) {
+            throw new HttpUnprocessableEntityException( Message.FILE_ENCRYPTED_REQUIRED );
+        }
+        
+        this.encrypted = encrypted;
 
         return this;
     }
