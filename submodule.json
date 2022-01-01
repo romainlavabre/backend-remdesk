@@ -1,0 +1,86 @@
+[
+    {
+        "name": "Container",
+        "repository": "git@github.com:romainlavabre/spring-starter-container.git",
+        "tag": "1.[0-9]*.[0-9]*",
+        "scriptExecution": "auto",
+        "target": "/src/main/java/com/remdesk/api/api/container"
+    },
+    {
+        "name": "Environment",
+        "repository": "git@github.com:romainlavabre/spring-starter-environment.git",
+        "tag": "1.[0-9]*.[0-9]*",
+        "scriptExecution": "auto",
+        "target": "/src/main/java/com/remdesk/api/api/environment"
+    },
+    {
+        "name": "Event",
+        "repository": "git@github.com:romainlavabre/spring-starter-event.git",
+        "tag": "1.[0-9]*.[0-9]*",
+        "scriptExecution": "auto",
+        "target": "/src/main/java/com/remdesk/api/api/event"
+    },
+    {
+        "name": "History",
+        "repository": "git@github.com:romainlavabre/spring-starter-history.git",
+        "tag": "1.[0-9]*.[0-9]*",
+        "scriptExecution": "auto",
+        "target": "/src/main/java/com/remdesk/api/api/history"
+    },
+    {
+        "name": "Json",
+        "repository": "git@github.com:romainlavabre/spring-starter-json.git",
+        "tag": "1.[0-9]*.[0-9]*",
+        "scriptExecution": "auto",
+        "target": "/src/main/java/com/remdesk/api/api/json"
+    },
+    {
+        "name": "Poc",
+        "repository": "git@github.com:romainlavabre/spring-starter-poc.git",
+        "tag": "1.[0-9]*.[0-9]*",
+        "scriptExecution": "auto",
+        "target": "/src/main/java/com/remdesk/api/api/poc"
+    },
+    {
+        "name": "PocTest",
+        "repository": "git@github.com:romainlavabre/spring-starter-poc-test.git",
+        "tag": "1.[0-9]*.[0-9]*",
+        "scriptExecution": "auto",
+        "target": "/src/test/java/com/remdesk/api/api/poc"
+    },
+    {
+        "name": "Request",
+        "repository": "git@github.com:romainlavabre/spring-starter-request.git",
+        "tag": "1.[0-9]*.[0-9]*",
+        "scriptExecution": "auto",
+        "target": "/src/main/java/com/remdesk/api/api/request"
+    },
+    {
+        "name": "Crud",
+        "repository": "git@github.com:romainlavabre/spring-starter-crud.git",
+        "tag": "1.[0-9]*.[0-9]*",
+        "scriptExecution": "auto",
+        "target": "/src/main/java/com/remdesk/api/api/crud"
+    },
+    {
+        "name": "Rest",
+        "repository": "git@github.com:romainlavabre/spring-starter-rest.git",
+        "tag": "1.[0-9]*.[0-9]*",
+        "scriptExecution": "auto",
+        "target": "/src/main/java/com/remdesk/api/api/rest"
+    },
+    {
+        "name": "Security",
+        "repository": "git@github.com:romainlavabre/spring-starter-security.git",
+        "tag": "1.[0-9]*.[0-9]*",
+        "scriptExecution": "auto",
+        "target": "/src/main/java/com/remdesk/api/api/security"
+    },
+    {
+        "name": "Upload",
+        "repository": "git@github.com:romainlavabre/spring-starter-upload.git",
+        "tag": "1.[0-9]*.[0-9]*",
+        "scriptExecution": "auto",
+        "target": "/src/main/java/com/remdesk/api/api/upload"
+    }
+]

@@ -10,6 +10,6 @@ public class DefaultUnmanagedExecutor implements UnmanagedTrigger {
 
     @Override
     public void handle( Request request, Object resource ) {
-        
+
     }
 }

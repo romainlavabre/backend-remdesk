@@ -1,9 +1,9 @@
 package com.remdesk.api.api.upload;
 
 import com.remdesk.api.api.container.Container;
-import com.remdesk.api.api.upload.Move.MoveRule;
 import com.remdesk.api.api.upload.annotation.*;
 import com.remdesk.api.api.upload.duplication.DuplicationRule;
+import com.remdesk.api.api.upload.move.MoveRule;
 import com.remdesk.api.configuration.upload.UploadConfig;
 import org.springframework.stereotype.Service;
 

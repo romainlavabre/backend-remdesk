@@ -2,8 +2,6 @@ package com.remdesk.api.api.request;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.remdesk.api.api.upload.UploadedFile;
-import com.remdesk.api.api.upload.UploadedFileImpl;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;

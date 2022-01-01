@@ -1,6 +1,6 @@
 package com.remdesk.api.api.poc.loader.mock;
 
-import com.remdesk.api.api.upload.UploadedFile;
+import com.remdesk.api.api.request.UploadedFile;
 
 import java.util.Map;
 

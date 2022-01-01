@@ -2,8 +2,8 @@ package com.remdesk.api.module.file;
 
 import com.remdesk.api.api.poc.api.UnmanagedTrigger;
 import com.remdesk.api.api.request.Request;
+import com.remdesk.api.api.request.UploadedFile;
 import com.remdesk.api.api.storage.document.DocumentStorageHandler;
-import com.remdesk.api.api.upload.UploadedFile;
 import com.remdesk.api.configuration.response.Message;
 import com.remdesk.api.entity.File;
 import com.remdesk.api.exception.HttpConflictException;

@@ -1,6 +1,7 @@
 package com.remdesk.api.api.upload;
 
 import com.remdesk.api.api.event.EventSubscriber;
+import com.remdesk.api.api.request.UploadedFile;
 import com.remdesk.api.api.upload.exception.UploadException;
 
 /**

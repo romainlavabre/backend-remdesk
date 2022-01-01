@@ -4,7 +4,6 @@ import com.remdesk.api.api.event.EventSubscriber;
 import com.remdesk.api.api.event.annotation.Subscribers;
 import com.remdesk.api.api.event.annotation.UnitEvent;
 import com.remdesk.api.api.history.HistoryHandler;
-import com.remdesk.api.api.upload.UploadHandler;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,14 +17,11 @@ import java.util.Map;
 @Service
 public class EventConfig implements Event {
 
-    protected UploadHandler  uploadHandler;
     protected HistoryHandler historyHandler;
 
 
     public EventConfig(
-            final UploadHandler uploadHandler,
             final HistoryHandler historyHandler ) {
-        this.uploadHandler  = uploadHandler;
         this.historyHandler = historyHandler;
     }
 
@@ -40,7 +36,6 @@ public class EventConfig implements Event {
     public List< EventSubscriber > subscribersTransactionSuccess() {
         final List< EventSubscriber > list = new ArrayList<>();
 
-        list.add( this.uploadHandler );
         list.add( this.historyHandler );
 
         return list;

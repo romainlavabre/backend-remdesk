@@ -213,7 +213,7 @@ public final class Context {
             return ( EntityHandler ) mocks.get( EntityHandler.class );
         }
 
-        mocks.put( EntityHandler.class, new com.remdesk.api.api.poc.loader.mock.EntityHandler() );
+        mocks.put( EntityHandler.class, new EntityHandler() );
 
         return ( EntityHandler ) mocks.get( EntityHandler.class );
     }

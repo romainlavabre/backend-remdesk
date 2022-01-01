@@ -3,7 +3,7 @@ package com.remdesk.api.api.poc.client;
 import com.remdesk.api.api.poc.loader.Context;
 import com.remdesk.api.api.poc.loader.mock.MockRequest;
 import com.remdesk.api.api.poc.loader.mock.MockRequestMappingHandlerMapping;
-import com.remdesk.api.api.upload.UploadedFile;
+import com.remdesk.api.api.request.UploadedFile;
 import org.mockito.Mockito;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

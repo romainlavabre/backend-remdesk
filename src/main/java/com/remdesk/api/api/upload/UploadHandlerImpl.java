@@ -1,5 +1,6 @@
 package com.remdesk.api.api.upload;
 
+import com.remdesk.api.api.request.UploadedFile;
 import com.remdesk.api.api.upload.exception.UploadException;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;

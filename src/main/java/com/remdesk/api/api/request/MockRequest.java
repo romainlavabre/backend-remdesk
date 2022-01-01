@@ -1,7 +1,5 @@
 package com.remdesk.api.api.request;
 
-import com.remdesk.api.api.upload.UploadedFile;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

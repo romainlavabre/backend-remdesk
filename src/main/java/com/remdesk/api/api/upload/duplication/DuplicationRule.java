@@ -1,6 +1,6 @@
 package com.remdesk.api.api.upload.duplication;
 
-import com.remdesk.api.api.upload.UploadedFile;
+import com.remdesk.api.api.request.UploadedFile;
 import com.remdesk.api.api.upload.exception.DuplicationException;
 
 /**

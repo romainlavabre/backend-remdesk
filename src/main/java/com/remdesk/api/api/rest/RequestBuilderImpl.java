@@ -83,7 +83,7 @@ public class RequestBuilderImpl implements RequestBuilder {
     public RequestBuilder jsonBody( final Map< String, Object > json ) {
         this.requestBodyEntity = this.requestWithBody.body( (new Gson()).toJson( json ) );
 
-        this.inContentType( JSON );
+        this.inContentType( RequestBuilder.JSON );
 
         return this;
     }
@@ -93,7 +93,7 @@ public class RequestBuilderImpl implements RequestBuilder {
     public RequestBuilder jsonBody( final List< Object > json ) {
         this.requestBodyEntity = this.requestWithBody.body( (new Gson()).toJson( json ) );
 
-        this.inContentType( JSON );
+        this.inContentType( RequestBuilder.JSON );
 
         return this;
     }
