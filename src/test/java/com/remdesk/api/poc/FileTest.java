@@ -7,6 +7,7 @@ import com.remdesk.api.api.request.UploadedFileImpl;
 import com.remdesk.api.api.storage.document.DocumentStorageHandler;
 import com.remdesk.api.entity.File;
 import com.remdesk.api.entity.Folder;
+import com.remdesk.api.module.configuration.Encryptor;
 import com.remdesk.api.repository.FileRepository;
 import com.remdesk.api.repository.FolderRepository;
 import org.junit.jupiter.api.Assertions;
@@ -59,6 +60,7 @@ public class FileTest {
                .thenReturn( new Folder() );
         Mockito.when( pocMock.getMock( DocumentStorageHandler.class ).create( Mockito.anyString(), Mockito.any( byte[].class ) ) )
                .thenReturn( true );
+        Mockito.when( pocMock.getMock( Encryptor.class ).encrypt( Mockito.any( byte[].class ) ) ).thenReturn( new byte[]{1, 2, 3} );
 
         for ( Map< String, Map< String, Object > > payload : dp_create_success() ) {
             UploadedFile uploadedFile = null;
@@ -128,7 +130,7 @@ public class FileTest {
                 Map.of(
                         "param", Map.of(
                                 "file_name", "File 1",
-                                "encrypted", true,
+                                "file_encrypted", true,
                                 "file_folder_id", 1
                         ),
                         "file", Map.of(
@@ -138,7 +140,7 @@ public class FileTest {
                 Map.of(
                         "param", Map.of(
                                 "file_name", "File 2",
-                                "encrypted", true
+                                "file_encrypted", true
                         ),
                         "file", Map.of(
                                 "file_file", uploadedFile
@@ -158,7 +160,7 @@ public class FileTest {
                 Map.of(
                         "param", Map.of(
                                 "file_folder_id", 1,
-                                "encrypted", true
+                                "file_encrypted", true
                         ),
                         "file", Map.of(
                                 "file_file", uploadedFile
@@ -167,7 +169,7 @@ public class FileTest {
                 Map.of(
                         "param", Map.of(
                                 "file_name", "",
-                                "encrypted", true,
+                                "file_encrypted", true,
                                 "file_folder_id", 1
                         ),
                         "file", Map.of(
@@ -177,7 +179,7 @@ public class FileTest {
                 Map.of(
                         "param", Map.of(
                                 "file_name", "  ",
-                                "encrypted", true,
+                                "file_encrypted", true,
                                 "file_folder_id", 1
                         ),
                         "file", Map.of(
