@@ -79,6 +79,9 @@ public class File {
     } )
     private long size;
 
+    @Json( groups = {
+            @Group( name = GroupType.GUEST )
+    } )
     private boolean encrypted;
 
     @Json( groups = {
@@ -186,7 +189,7 @@ public class File {
         if ( encrypted == null ) {
             throw new HttpUnprocessableEntityException( Message.FILE_ENCRYPTED_REQUIRED );
         }
-        
+
         this.encrypted = encrypted;
 
         return this;
