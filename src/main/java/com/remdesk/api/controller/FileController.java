@@ -85,8 +85,8 @@ public class FileController {
     }
 
 
-    @PostMapping( path = "/cache/purge" )
-    public ResponseEntity< Void > purgeCache() {
+    @PostMapping( path = "/cache/clear" )
+    public ResponseEntity< Void > clearCache() {
         clearer.purgeOpen();
 
         return ResponseEntity.noContent().build();
