@@ -54,7 +54,7 @@ public class EncryptField implements AttributeConverter< String, String > {
     public String convertToEntityAttribute( String data ) {
 
         try {
-            return new String( cipherEncrypt.doFinal( Base64.getDecoder().decode( data ) ) );
+            return new String( cipherDecrypt.doFinal( Base64.getDecoder().decode( data ) ) );
         } catch ( BadPaddingException | IllegalBlockSizeException e ) {
             throw new HttpInternalServerErrorException( "An error occurred" );
         }
