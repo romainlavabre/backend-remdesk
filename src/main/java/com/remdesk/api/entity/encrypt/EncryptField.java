@@ -24,14 +24,18 @@ public class EncryptField implements AttributeConverter< String, String > {
 
     protected final static String               ALGORITHM = "AES";
     protected final        ConfigurationHandler configurationHandler;
-    protected final        Cipher               cipher;
+    protected final        Cipher               cipherEncrypt;
+    protected final        Cipher               cipherDecrypt;
     protected final        Key                  key;
 
 
-    public EncryptField( ConfigurationHandler configurationHandler ) throws NoSuchPaddingException, NoSuchAlgorithmException {
+    public EncryptField( ConfigurationHandler configurationHandler ) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
         this.configurationHandler = configurationHandler;
-        cipher                    = Cipher.getInstance( ALGORITHM );
+        cipherEncrypt             = Cipher.getInstance( ALGORITHM );
+        cipherDecrypt             = Cipher.getInstance( ALGORITHM );
         key                       = new SecretKeySpec( configurationHandler.getDatabaseConfig().getEncryptionKey().getBytes(), ALGORITHM );
+        cipherEncrypt.init( Cipher.ENCRYPT_MODE, key );
+        cipherDecrypt.init( Cipher.DECRYPT_MODE, key );
     }
 
 
@@ -39,9 +43,8 @@ public class EncryptField implements AttributeConverter< String, String > {
     public String convertToDatabaseColumn( String data ) {
 
         try {
-            cipher.init( Cipher.ENCRYPT_MODE, key );
-            return Base64.getEncoder().encodeToString( cipher.doFinal( data.getBytes() ) );
-        } catch ( InvalidKeyException | BadPaddingException | IllegalBlockSizeException e ) {
+            return Base64.getEncoder().encodeToString( cipherEncrypt.doFinal( data.getBytes() ) );
+        } catch ( BadPaddingException | IllegalBlockSizeException e ) {
             throw new HttpInternalServerErrorException( "An error occurred" );
         }
     }
@@ -51,9 +54,8 @@ public class EncryptField implements AttributeConverter< String, String > {
     public String convertToEntityAttribute( String data ) {
 
         try {
-            cipher.init( Cipher.DECRYPT_MODE, key );
-            return new String( cipher.doFinal( Base64.getDecoder().decode( data ) ) );
-        } catch ( InvalidKeyException | BadPaddingException | IllegalBlockSizeException e ) {
+            return new String( cipherEncrypt.doFinal( Base64.getDecoder().decode( data ) ) );
+        } catch ( BadPaddingException | IllegalBlockSizeException e ) {
             throw new HttpInternalServerErrorException( "An error occurred" );
         }
     }
